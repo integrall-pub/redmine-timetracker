@@ -109,7 +109,7 @@ const depthStyles = (depth: number) => ({
 
 const styles = StyleSheet.create({
   projectRow: {
-    borderTopWidth: 1,
+    borderBottomWidth: 1,
     borderColor: '#333333',
     flexDirection: 'row',
     flex: 1,

@@ -2,18 +2,18 @@
 'use strict'
 import { List } from 'immutable'
 
-import type { Action, Project } from '../types'
+import type { Action, Issue } from '../types'
 
 const initialState = List()
 
-export default function loginReducer (
-  state?: List<Project> = initialState,
+export default function issuesReducer (
+  state?: List<Issue> = initialState,
   action: Action
 ) {
   switch (action.type) {
-    case 'projects-load-done':
+    case 'issues-load-done':
       return action.success
-        ? parseRoots(List(action.projects))
+        ? List(action.issues)
         : initialState
 
     default:

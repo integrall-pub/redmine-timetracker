@@ -48,14 +48,22 @@ export type Author = {
   name: string
 }
 
+export type IssueSearch = {
+  search: string,
+  active: boolean
+}
+
 type ProjectAction =
   { type: 'projects-load' } |
   { type: 'projects-load-done', success: boolean, projects: Array<Project> } |
-  { type: 'project-expand', projectId: number }
+  { type: 'project-expand', projectId: number } |
+  { type: 'project-select', projectId: number }
 
-type IssueActions =
+type IssueAction =
   { type: 'issues-load' } |
-  { type: 'issues-load-done', success: boolean, issues: Array<Issue> }
+  { type: 'issues-load-done', success: boolean, issues: Array<Issue> } |
+  { type: 'issues-select', issueId: number } |
+  { type: 'issue-search', search: string, active: boolean }
 
 export type Action =
   { type: 'load-connection' } |
@@ -67,11 +75,17 @@ export type Action =
   { type: 'api-key-set', key: string } |
   { type: 'login-set', login: Login } |
   { type: 'login-dismiss-fail' } |
-  ProjectAction
+  ProjectAction |
+  IssueAction
 
   export type AppState = {
     lastAction: Action,
     endpoint: Endpoint,
     apiKey: ApiKey,
-    login: Login
+    login: Login,
+    projects: List<Project>,
+    projectExpand: List<number>,
+    projectSelect: number,
+    issues: List<Issue>,
+    issueSearch: IssueSearch
   }

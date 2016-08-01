@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "base-64": "^0.1.0",
+    "fuse.js": "^2.3.0",
     "immutable": "^3.8.1",
     "react": "15.2.1",
     "react-native": "0.30.0",

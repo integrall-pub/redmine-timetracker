@@ -32,8 +32,8 @@ export default function (state: AppState, dispatch: Dispatch) {
       loadIssues(
         dispatch,
         url,
-        key.
-        lastAction.project
+        key,
+        state.projectSelect
       )
       break
   }
@@ -90,18 +90,19 @@ const loadIssues = (
   dispatch,
   url: string,
   key: string,
-  project: number
+  projectId: number
 ) => (
   fetch(
-    path(url, 'issues.json?project_id=' + project),
+    path(url, 'issues.json?project_id=' + projectId),
     baseParams(key))
+    .then((r) => { console.log(r); return r })
     .then((r) => r.json())
     .then((r) => dispatch({
       type: 'issues-load-done',
       success: true,
       issues: r.issues
     }))
-    .then((error) => dispatch({
+    .catch((error) => dispatch({
       type: 'issues-load-done',
       success: false,
       issues: []

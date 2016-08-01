@@ -5,7 +5,7 @@ import type { Action, InitState } from '../types'
 
 const initialState = List()
 
-export default function loginReducer (
+export default function projectExpandReducer (
   state?: List<number> = initialState,
   action: Action
 ) {

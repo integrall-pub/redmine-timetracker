@@ -9,6 +9,10 @@ import loginReducer from './loginReducer'
 
 import projectsReducer from './projectsReducer'
 import projectExpandReducer from './projectExpandReducer'
+import projectSelectReducer from './projectSelectReducer'
+
+import issuesReducer from './issuesReducer'
+import issueSearchReducer from './issueSearchReducer'
 
 export default combineReducers({
   lastAction: lastActionReducer,
@@ -17,5 +21,8 @@ export default combineReducers({
   apiKey: apiKeyReducer,
   login: loginReducer,
   projects: projectsReducer,
-  projectExpand: projectExpandReducer
+  projectExpand: projectExpandReducer,
+  projectSelect: projectSelectReducer,
+  issues: issuesReducer,
+  issueSearch: issueSearchReducer
 })

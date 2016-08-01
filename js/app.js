@@ -3,8 +3,11 @@
 
 import React, { Component } from 'react'
 import {
+  Platform,
   StyleSheet,
-  Navigator
+  Navigator,
+  Text,
+  View
 } from 'react-native'
 import { Provider, connect } from 'react-redux'
 
@@ -14,8 +17,12 @@ import {
   SplashComponent,
   EndpointComponent,
   LoginComponent,
-  DashboardComponent
+  DashboardComponent,
+  StartRecComponent
 } from './components'
+
+import NavTitle from './components/common/NavTitle'
+import attachNavigator from './util/attachNavigator'
 
 const routes = {
   endpoint: {
@@ -25,12 +32,17 @@ const routes = {
   },
   login: {
     attach: (navigator) => (
-      <LoginComponent onContinue={() => navigator.push(routes.dashboard)} />
+      <LoginComponent onContinue={() => navigator.resetTo(routes.dashboard)} />
     )
   },
   dashboard: {
     attach: (navigator) => (
-      <DashboardComponent />
+      <DashboardComponent onNavigate={(target: string) => navigator.push(routes[target])} />
+    )
+  },
+  startRec: {
+    attach: (navigator) => (
+      <StartRecComponent />
     )
   }
 }
@@ -41,23 +53,26 @@ type RTTState = {
 }
 export default class RedmineTimeTracker extends Component {
   state: RTTState;
+  _detachNavigator: () => void;
 
-  constructor (props: any) {
+  constructor (props: any2) {
     super(props)
     this.state = {
       init: Store.getState().init
     }
-
     this._update = this._update.bind(this)
   }
+
   componentDidMount () {
     this.setState({
       unsubscribe: Store.subscribe(this._update)
     })
+    this._detachNavigator = attachNavigator(() => this.refs.navigator)
   }
 
   componentWillUnmount () {
     this.state.unsubscribe()
+    this._detachNavigator()
   }
 
   _update () {
@@ -73,6 +88,7 @@ export default class RedmineTimeTracker extends Component {
           ? (<SplashComponent />)
           : (
             <Navigator
+              ref='navigator'
               initialRoute={this.state.init === 'success'
                 ? routes.dashboard
                 : routes.endpoint}

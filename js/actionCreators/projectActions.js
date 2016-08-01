@@ -11,3 +11,8 @@ export const expandProject = (id: number): Action => ({
   type: 'project-expand',
   projectId: id
 })
+
+export const selectProject = (id: number): Action => ({
+  type: 'project-select',
+  projectId: id
+})
