@@ -13,8 +13,12 @@ import {
 
 import KeyboardAdaptive from './common/KeyboardAdaptive'
 import ProjectView from './common/ProjectView'
+import CurrentRecordView from './common/CurrentRecordView'
 
-import { projectActions } from '../actionCreators'
+import {
+  projectActions,
+  recordActions
+} from '../actionCreators'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
@@ -33,20 +37,24 @@ class DashboardComponent extends Component {
   }
 
   render () {
+    console.log('dashboard', this.props.records.current)
     return (
-      <View style={{ flex: 1}}>
-        <View style={{ flex: 1, borderWidth: 1, borderRadius: 3, margin: 5, justifyContent: 'center', alignItems: 'center' }}>
-          <Text>Dashboard</Text>
+      <View>
+        <View style={{ borderWidth: 1, borderRadius: 3, margin: 5, padding: 10, justifyContent: 'center', alignItems: 'center' }}>
+          <CurrentRecordView
+            currentRecord={this.props.records.current}
+            onStop={this.props.actions.record.stopRecording} />
         </View>
         <View style={{ borderBottomWidth: 1, paddingLeft: 8 }}>
           <Text>Projects</Text>
         </View>
-        <ScrollView style={{ flex: 4 }}>
+        <ScrollView style={{ flex: 1 }}>
           {this.props.projects.map((p) => (
             <ProjectView
               key={p.id}
               project={p}
               expandedIds={this.props.projectExpand}
+              disabled={this.props.records.current !== null}
               onExpand={(id) => this.props.actions.project.expandProject(id)}
               onRec={(id) => {
                 console.log('rec', id)
@@ -61,10 +69,11 @@ class DashboardComponent extends Component {
 }
 
 export default connect(
-  ({ projects, projectExpand }) => ({ projects, projectExpand }),
+  ({ projects, projectExpand, records }) => ({ projects, projectExpand, records }),
   (dispatch) => ({
     actions: {
-      project: bindActionCreators(projectActions, dispatch)
+      project: bindActionCreators(projectActions, dispatch),
+      record: bindActionCreators(recordActions, dispatch)
     }
   })
 )(DashboardComponent)

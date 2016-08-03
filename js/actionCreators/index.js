@@ -7,7 +7,9 @@ import * as initActions from './initActions'
 
 import * as projectActions from './projectActions'
 import * as issueActions from './issueActions'
-import * as issueSearchActions from './issueSearchActions'
+
+import * as recordActions from './recordActions'
+import * as recordEditActions from './recordEditActions'
 
 export {
   initActions,
@@ -15,5 +17,6 @@ export {
   loginActions,
   projectActions,
   issueActions,
-  issueSearchActions
+  recordActions,
+  recordEditActions
 }

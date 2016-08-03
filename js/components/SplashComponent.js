@@ -12,7 +12,7 @@ import {
 } from 'react-native'
 
 
-import { initActions } from '../actionCreators'
+import { initActions, recordActions } from '../actionCreators'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
@@ -29,7 +29,8 @@ class SplashComponent extends Component {
   }
 
   componentDidMount () {
-    this.props.actions.load()
+    this.props.actions.record.migrate()
+    this.props.actions.init.load()
   }
 
   render () {
@@ -41,5 +42,10 @@ class SplashComponent extends Component {
 
 export default connect(
   ({ endpoint, apiKey }) => ({ endpoint, apiKey }),
-  (dispatch) => ({ actions: bindActionCreators(initActions, dispatch) })
+  (dispatch) => ({
+    actions: {
+      init: bindActionCreators(initActions, dispatch),
+      record: bindActionCreators(recordActions, dispatch)
+    }
+  })
 )(SplashComponent)

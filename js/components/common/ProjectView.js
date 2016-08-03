@@ -16,14 +16,14 @@ import { List } from 'immutable'
 type ProjectViewProps = {
   project: Project,
   expandedIds?: List<number>,
-  recordingId?: number,
+  disabled?: boolean,
   onExpand?: (id: number) => void,
   onRec?: (id: number) => void
 }
 export default function ProjectView ({
   project,
   expandedIds = List(),
-  recordingId = -1,
+  disabled = false,
   onExpand = () => {},
   onRec = () => {}
 }: ProjectViewProps) {
@@ -48,7 +48,7 @@ export default function ProjectView ({
 
           <RecButton
             project={project}
-            disabled={recordingId === project.id}
+            disabled={disabled}
             onPress={() => onRec(project.id)} />
 
         </View>
@@ -61,7 +61,7 @@ export default function ProjectView ({
             key={c.id}
             project={c}
             expandedIds={expandedIds}
-            recordingId={recordingId}
+            disabled={disabled}
             onExpand={onExpand}
             onRec={onRec} />
       ))}
@@ -88,14 +88,15 @@ const RecButton = ({
   disabled = false,
   onPress = () => {}
 }: RecButtonProps) => (
-  !disabled && project && project.hasTracking
+  project && project.hasTracking
     ? (
       <TouchableHighlight
         activeOpacity={0.8}
         underlayColor='gray'
         style={styles.recButton}
+        disabled={disabled}
         onPress={onPress}>
-        <Icon name='play' size={18} color='#333333' />
+        <Icon name='play' size={18} color='#333333' style={{ opacity: disabled ? 0.4 : 1.0 }} />
       </TouchableHighlight>
     ): null
 )

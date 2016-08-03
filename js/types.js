@@ -48,9 +48,25 @@ export type Author = {
   name: string
 }
 
-export type IssueSearch = {
+export type RecordEdit = {
   search: string,
-  active: boolean
+  searcActive: boolean,
+  record: Record
+}
+
+export type Record = {
+  id: number,
+  projectId: number,
+  issueId: number,
+  comment: string,
+  startTime: string,
+  endTime: string,
+  synced: boolean
+}
+
+export type RecordState = {
+  current: Record|null,
+  all: List<Record>
 }
 
 type ProjectAction =
@@ -61,9 +77,25 @@ type ProjectAction =
 
 type IssueAction =
   { type: 'issues-load' } |
-  { type: 'issues-load-done', success: boolean, issues: Array<Issue> } |
-  { type: 'issues-select', issueId: number } |
-  { type: 'issue-search', search: string, active: boolean }
+  { type: 'issues-load-done', success: boolean, issues: Array<Issue> }
+
+type RecordAction =
+  { type: 'record-migrate' } |
+  { type: 'record-load' } |
+  { type: 'record-load-done', success: boolean, records: List<Record> } |
+  { type: 'record-create', record: Record } |
+  { type: 'record-create-done', success: boolean, records: List<Record> } |
+  { type: 'record-edit', record: Record } |
+  { type: 'record-edit-done', success: boolean, records: List<Record> } |
+  { type: 'record-delete', record: Record } |
+  { type: 'record-delete-done', success: boolean, records: List<Records> }
+
+type RecordEditAction =
+  { type: 'rec-edit-issues-select', issueId: number } |
+  { type: 'rec-edit-issue-search', search: string, active: boolean } |
+  { type: 'rec-edit-comment', comment: string } |
+  { type: 'rec-edit-clear' }
+
 
 export type Action =
   { type: 'load-connection' } |
@@ -76,7 +108,9 @@ export type Action =
   { type: 'login-set', login: Login } |
   { type: 'login-dismiss-fail' } |
   ProjectAction |
-  IssueAction
+  IssueAction |
+  RecordAction |
+  RecordEditAction
 
   export type AppState = {
     lastAction: Action,
@@ -87,5 +121,6 @@ export type Action =
     projectExpand: List<number>,
     projectSelect: number,
     issues: List<Issue>,
-    issueSearch: IssueSearch
+    records: RecordState,
+    recordEdit: RecordEdit
   }

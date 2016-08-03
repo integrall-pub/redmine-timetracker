@@ -12,7 +12,9 @@ import projectExpandReducer from './projectExpandReducer'
 import projectSelectReducer from './projectSelectReducer'
 
 import issuesReducer from './issuesReducer'
-import issueSearchReducer from './issueSearchReducer'
+
+import recordReducer from './recordReducer'
+import recordEditReducer from './recordEditReducer'
 
 export default combineReducers({
   lastAction: lastActionReducer,
@@ -24,5 +26,6 @@ export default combineReducers({
   projectExpand: projectExpandReducer,
   projectSelect: projectSelectReducer,
   issues: issuesReducer,
-  issueSearch: issueSearchReducer
+  records: recordReducer,
+  recordEdit: recordEditReducer
 })
