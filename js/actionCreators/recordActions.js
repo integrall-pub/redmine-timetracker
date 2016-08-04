@@ -21,7 +21,7 @@ export const startRecording = (
     comment: comment,
     startTime: moment().toISOString(),
     endTime: '',
-    synced: false
+    remoteId: -1
   }
 })
 

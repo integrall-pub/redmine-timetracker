@@ -11,11 +11,12 @@ import {
   View
 } from 'react-native'
 
-import KeyboardAdaptive from './common/KeyboardAdaptive'
+import Navbar from './common/Navbar'
 import ProjectView from './common/ProjectView'
-import CurrentRecordView from './common/CurrentRecordView'
+import RecordView from './common/RecordView'
 
 import {
+  issueActions,
   projectActions,
   recordActions
 } from '../actionCreators'
@@ -37,14 +38,12 @@ class DashboardComponent extends Component {
   }
 
   render () {
-    console.log('dashboard', this.props.records.current)
     return (
       <View>
-        <View style={{ borderWidth: 1, borderRadius: 3, margin: 5, padding: 10, justifyContent: 'center', alignItems: 'center' }}>
-          <CurrentRecordView
-            currentRecord={this.props.records.current}
-            onStop={this.props.actions.record.stopRecording} />
-        </View>
+        <Navbar active={'dashboard'} onHistory={() => this.props.onNavigate('history')} />
+        <RecordView
+          record={this.props.records.current}
+          onStop={this.props.actions.record.stopRecording} />
         <View style={{ borderBottomWidth: 1, paddingLeft: 8 }}>
           <Text>Projects</Text>
         </View>
@@ -69,11 +68,12 @@ class DashboardComponent extends Component {
 }
 
 export default connect(
-  ({ projects, projectExpand, records }) => ({ projects, projectExpand, records }),
+  ({ issues, projects, projectExpand, records }) => ({ issues, projects, projectExpand, records }),
   (dispatch) => ({
     actions: {
       project: bindActionCreators(projectActions, dispatch),
-      record: bindActionCreators(recordActions, dispatch)
+      record: bindActionCreators(recordActions, dispatch),
+      issue: bindActionCreators(issueActions, dispatch)
     }
   })
 )(DashboardComponent)

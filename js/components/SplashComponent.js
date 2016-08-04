@@ -29,8 +29,8 @@ class SplashComponent extends Component {
   }
 
   componentDidMount () {
-    this.props.actions.record.migrate()
     this.props.actions.init.load()
+    setTimeout(() => this.props.actions.record.migrate(), 1000) // TODO: Timeout...
   }
 
   render () {

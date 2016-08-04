@@ -14,7 +14,7 @@ const initialState = () => ({
     comment: '',
     startTime: '',
     endTime: '',
-    synced: false
+    remoteId: -1
   }
 })
 

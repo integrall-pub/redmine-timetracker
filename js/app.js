@@ -18,7 +18,8 @@ import {
   EndpointComponent,
   LoginComponent,
   DashboardComponent,
-  StartRecComponent
+  StartRecComponent,
+  HistoryComponent
 } from './components'
 
 import NavTitle from './components/common/NavTitle'
@@ -37,12 +38,26 @@ const routes = {
   },
   dashboard: {
     attach: (navigator) => (
-      <DashboardComponent onNavigate={(target: string) => navigator.push(routes[target])} />
+      <DashboardComponent onNavigate={(target: string) => {
+        console.log(target)
+        switch (target) {
+          case 'startRec':
+            // falls through
+          case 'history':
+            navigator.push(routes[target])
+            break
+        }
+      }} />
     )
   },
   startRec: {
     attach: (navigator) => (
       <StartRecComponent />
+    )
+  },
+  history: {
+    attach: (navigator) => (
+      <HistoryComponent onNavigate={() => navigator.pop()} />
     )
   }
 }

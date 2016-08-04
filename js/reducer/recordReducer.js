@@ -23,9 +23,7 @@ export default function recordReducer (
     case 'record-delete-done':
       if (!action.success) { return state }
       return {
-        current: (action.records || List())
-          .filter((r) => r.endTime === '')
-          .first() || null,
+        current: action.current || null,
         all: action.records || List()
       }
 

@@ -40,8 +40,7 @@ export type Issue = {
   subject: string,
   description: string,
   author: Author,
-  project: ProjectRef,
-  author: Author,
+  project: ProjectRef
 }
 export type Author = {
   id: number,
@@ -54,14 +53,31 @@ export type RecordEdit = {
   record: Record
 }
 
+export type Activity = {
+  id: number,
+  name: string
+}
+
 export type Record = {
   id: number,
   projectId: number,
   issueId: number,
+  activityId: number,
   comment: string,
   startTime: string,
   endTime: string,
-  synced: boolean
+  remoteId: number
+}
+
+export type RecordDetails = {
+  id: number,
+  project: Project,
+  issue: Issue,
+  activity: Activity,
+  comment: string,
+  startTime: string,
+  endTime: string,
+  remoteId: number
 }
 
 export type RecordState = {
@@ -77,7 +93,9 @@ type ProjectAction =
 
 type IssueAction =
   { type: 'issues-load' } |
-  { type: 'issues-load-done', success: boolean, issues: Array<Issue> }
+  { type: 'issues-load-done', success: boolean, issues: Array<Issue> } |
+  { type: 'issue-load-single', issueId: number } |
+  { type: 'issue-load-single-done', success: boolean, issue?: Issue }
 
 type RecordAction =
   { type: 'record-migrate' } |

@@ -8,6 +8,7 @@ import { List } from 'immutable'
 
 import type { Action, ApiKey, AppState } from '../types'
 import migrations from '../migrations'
+import * as client from '../redmine/client'
 
 export default function () {
   const adapter = createAdapter()
@@ -32,32 +33,12 @@ export default function () {
               ['@RecordStore:records', newRecords]
             ])
           })
-          .then(() => adapter.read()
-            .then((rs) => dispatch({
-              type: 'record-load-done',
-              success: true,
-              records: rs
-            }))
-            .catch((error) => dispatch({
-              type: 'record-load-done',
-              success: false,
-              records: List()
-            }))
+          .then(() => loadRecords(state, dispatch, adapter)
           )
         break
 
       case 'record-load':
-        adapter.read()
-          .then((rs) => dispatch({
-            type: 'record-load-done',
-            success: true,
-            records: rs
-          }))
-          .catch((error) => dispatch({
-            type: 'record-load-done',
-            success: false,
-            records: List()
-          }))
+        loadRecords(state, dispatch, adapter)
         break
 
       case 'record-create':
@@ -92,6 +73,62 @@ export default function () {
         )
         break
     }
+  }
+}
+
+const loadRecords = (state, dispatch, adapter) => (
+  adapter.read()
+    .then((rs) => {
+      let current = rs.filter((r) => r.endTime === '').first()
+      return loadRecordDetails(state, current)
+        .then((c) => ({
+          current: c,
+          records: rs
+        }))
+      })
+    .then((rs) => dispatch({
+      type: 'record-load-done',
+      success: true,
+      current: rs.current,
+      records: rs.records
+    }))
+    .catch((error) => dispatch({
+      type: 'record-loa2d-done',
+      success: false,
+      current: null,
+      records: List()
+    }))
+)
+
+const loadRecordDetails = (
+  state: AppState,
+  record: Record
+): Promise<RecordDetails> => {
+  if (record === null) {
+    return Promise.resolve(null)
+  } else {
+    console.log(state.projects.toArray())
+    return client.getIssue(
+      state.endpoint.url,
+      state.apiKey.key,
+      record.issueId)
+      .catch((error) => Promise.resolve({
+        id: record.issueId,
+        subject: '',
+        description: '',
+        author: null,
+        project: null
+      }))
+      .then((i) => Promise.resolve({
+        id: record.id,
+        project: i.project || { id: record.projectId, name: '' },
+        issue: i,
+        activity: { id: 1, name: 'Development' }, // TODO: Filter correct activity
+        comment: record.comment,
+        startTime: record.startTime,
+        endTime: record.endTime,
+        remoteId: record.remoteId
+      }))
   }
 }
 

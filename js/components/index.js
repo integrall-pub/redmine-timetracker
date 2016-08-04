@@ -6,11 +6,13 @@ import EndpointComponent from './EndpointComponent'
 import LoginComponent from './LoginComponent'
 import DashboardComponent from './DashboardComponent'
 import StartRecComponent from './StartRecComponent'
+import HistoryComponent from './HistoryComponent'
 
 export {
   SplashComponent,
   EndpointComponent,
   LoginComponent,
   DashboardComponent,
-  StartRecComponent
+  StartRecComponent,
+  HistoryComponent
 }
