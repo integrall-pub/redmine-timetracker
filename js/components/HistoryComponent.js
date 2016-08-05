@@ -10,6 +10,7 @@ import {
   TouchableHighlight,
   View
 } from 'react-native'
+import moment from 'moment'
 
 import Navbar from './common/Navbar'
 import RecordView from './common/RecordView'
@@ -37,7 +38,9 @@ class HistoryComponent extends Component {
       <View>
         <Navbar active={'history'} onDashboard={() => this.props.onNavigate()} />
         <View>
-          <WeekView records={this.props.records} />
+          <WeekView
+            week={moment().startOf('isoWeek')}
+            records={this.props.records} />
         </View>
         <RecordView record={this.props.records.current} />
         <View>

@@ -56,7 +56,6 @@ class DashboardComponent extends Component {
               disabled={this.props.records.current !== null}
               onExpand={(id) => this.props.actions.project.expandProject(id)}
               onRec={(id) => {
-                console.log('rec', id)
                 this.props.actions.project.selectProject(id)
                 this.props.onNavigate('startRec')
               }} />

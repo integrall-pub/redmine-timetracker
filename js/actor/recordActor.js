@@ -80,9 +80,19 @@ const loadRecords = (state, dispatch, adapter) => (
   adapter.read()
     .then((rs) => {
       let current = rs.filter((r) => r.endTime === '').first()
+      if (!current) {
+        return Promise.resolve({
+          current: null,
+          records: rs
+        })
+      }
       return loadRecordDetails(state, current)
         .then((c) => ({
           current: c,
+          records: rs
+        }))
+        .catch((error) => ({
+          current: null,
           records: rs
         }))
       })
@@ -92,12 +102,12 @@ const loadRecords = (state, dispatch, adapter) => (
       current: rs.current,
       records: rs.records
     }))
-    .catch((error) => dispatch({
-      type: 'record-loa2d-done',
+    .catch((error) => { console.log(error); dispatch({
+      type: 'record-load-done',
       success: false,
       current: null,
       records: List()
-    }))
+    })})
 )
 
 const loadRecordDetails = (
@@ -107,7 +117,6 @@ const loadRecordDetails = (
   if (record === null) {
     return Promise.resolve(null)
   } else {
-    console.log(state.projects.toArray())
     return client.getIssue(
       state.endpoint.url,
       state.apiKey.key,
