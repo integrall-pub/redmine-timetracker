@@ -9,6 +9,10 @@ import {
   View
 } from 'react-native'
 
+import type {
+  Endpoint
+} from '../types'
+
 import KeyboardAdaptive from './common/KeyboardAdaptive'
 import styles from './styles/fullscreen-form'
 
@@ -17,6 +21,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 type EndpointComponentProps = {
+  endpoint: Endpoint,
   setEndpoint: (url: string) => void,
   onContinue: () => void
 }

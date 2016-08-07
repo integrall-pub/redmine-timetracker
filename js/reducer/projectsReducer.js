@@ -2,7 +2,10 @@
 'use strict'
 import { List } from 'immutable'
 
-import type { Action, Project } from '../types'
+import type {
+  Action,
+  Project
+} from '../types'
 
 const initialState = List()
 
@@ -56,7 +59,7 @@ const parseChildren = (
   ), List())
 )
 
-const flattenChildren = (state: { depth: number, projects: List<Projects> }, p: Project) => (
+const flattenChildren = (state: { depth: number, projects: List<Project> }, p: Project) => (
   p.children && p.children.size > 0
     ? {
       ...state,

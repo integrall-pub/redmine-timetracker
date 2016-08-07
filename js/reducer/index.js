@@ -15,6 +15,7 @@ import issuesReducer from './issuesReducer'
 
 import recordReducer from './recordReducer'
 import recordEditReducer from './recordEditReducer'
+import recordDetailsReducer from './recordDetailsReducer'
 
 export default combineReducers({
   lastAction: lastActionReducer,
@@ -27,5 +28,6 @@ export default combineReducers({
   projectSelect: projectSelectReducer,
   issues: issuesReducer,
   records: recordReducer,
-  recordEdit: recordEditReducer
+  recordEdit: recordEditReducer,
+  recordDetails: recordDetailsReducer
 })

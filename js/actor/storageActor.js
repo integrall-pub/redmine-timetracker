@@ -31,6 +31,7 @@ export default function (state: AppState, dispatch: Dispatch) {
           type: 'load-connection-done',
           success: false
         }))
+      break
 
     case 'api-key-set':
       AsyncStorage.multiSet([

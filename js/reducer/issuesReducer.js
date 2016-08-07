@@ -10,7 +10,7 @@ import type {
 const initialState =  List()
 
 export default function issuesReducer (
-  state?: IssueState = initialState,
+  state?: List<Issue> = initialState,
   action: Action
 ) {
   switch (action.type) {

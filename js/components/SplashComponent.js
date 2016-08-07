@@ -17,9 +17,14 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 type SplashComponentProps = {
-  setUsername: (username: string) => void,
-  setPassword: (password: string) => void,
-  onLogin: () => void
+  actions: {
+    init: {
+      load: () => void
+    },
+    record: {
+      migrate: () => void
+    }
+  }
 }
 class SplashComponent extends Component {
   props: SplashComponentProps;

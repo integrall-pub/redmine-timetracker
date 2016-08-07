@@ -1,5 +1,8 @@
 /* @flow */
 'use strict'
+import type { List } from 'immutable'
+
+export type InitState = 'waiting'|'success'|'fail'
 
 export type ApiKey = { key: string, empty: boolean }
 export type Endpoint = { url: string, valid: boolean }
@@ -29,7 +32,7 @@ export type ProjectRef = {
   id: number,
   name: string
 }
-export type CustonField = {
+export type CustomField = {
   id: number,
   name: string,
   value: string
@@ -40,16 +43,22 @@ export type Issue = {
   subject: string,
   description: string,
   author: Author,
-  project: ProjectRef
+  project: ProjectRef,
+  tracker: Tracker
 }
 export type Author = {
   id: number,
   name: string
 }
 
+export type Tracker = {
+  id: number,
+  name: string
+}
+
 export type RecordEdit = {
   search: string,
-  searcActive: boolean,
+  searchActive: boolean,
   record: Record
 }
 
@@ -71,18 +80,19 @@ export type Record = {
 
 export type RecordDetails = {
   id: number,
-  project: Project,
+  project: ProjectRef,
   issue: Issue,
   activity: Activity,
   comment: string,
   startTime: string,
   endTime: string,
-  remoteId: number
+  remoteId: number,
+  base: Record
 }
 
-export type RecordState = {
-  current: Record|null,
-  all: List<Record>
+export type RecordDetailsState = {
+  current?: RecordDetails,
+  selected?: RecordDetails
 }
 
 type ProjectAction =
@@ -104,12 +114,18 @@ type RecordAction =
   { type: 'record-create', record: Record } |
   { type: 'record-create-done', success: boolean, records: List<Record> } |
   { type: 'record-edit', record: Record } |
-  { type: 'record-edit-done', success: boolean, records: List<Record> } |
+  { type: 'record-edit-done', success: boolean, records: List<Record> } |
   { type: 'record-delete', record: Record } |
-  { type: 'record-delete-done', success: boolean, records: List<Records> }
+  { type: 'record-delete-done', success: boolean, records: List<Record> }
+
+type RecordDetailsAction =
+  { type: 'record-details-current', record?: RecordDetails } |
+  { type: 'record-details-selected', record?: RecordDetails } |
+  { type: 'record-select', record: Record }
 
 type RecordEditAction =
-  { type: 'rec-edit-issues-select', issueId: number } |
+  { type: 'rec-edit-load', record: Record } |
+  { type: 'rec-edit-issue-select', issueId: number } |
   { type: 'rec-edit-issue-search', search: string, active: boolean } |
   { type: 'rec-edit-comment', comment: string } |
   { type: 'rec-edit-clear' }
@@ -128,7 +144,8 @@ export type Action =
   ProjectAction |
   IssueAction |
   RecordAction |
-  RecordEditAction
+  RecordEditAction |
+  RecordDetailsAction
 
   export type AppState = {
     lastAction: Action,
@@ -139,6 +156,7 @@ export type Action =
     projectExpand: List<number>,
     projectSelect: number,
     issues: List<Issue>,
-    records: RecordState,
-    recordEdit: RecordEdit
+    records: List<Record>,
+    recordEdit: RecordEdit,
+    recordDetails: RecordDetailsState
   }

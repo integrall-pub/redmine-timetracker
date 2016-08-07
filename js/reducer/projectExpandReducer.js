@@ -11,9 +11,10 @@ export default function projectExpandReducer (
 ) {
   switch (action.type) {
     case 'project-expand':
-      return state.includes(action.projectId)
-        ? state.filter((e) => e !== action.projectId)
-        : state.push(action.projectId)
+      let projectId = action.projectId
+      return state.includes(projectId)
+        ? state.filter((e) => e !== projectId)
+        : state.push(projectId)
 
     default:
       return state

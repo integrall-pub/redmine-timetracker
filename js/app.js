@@ -11,6 +11,10 @@ import {
 } from 'react-native'
 import { Provider, connect } from 'react-redux'
 
+import type {
+  InitState
+} from './types'
+
 import Store from './store'
 
 import {
@@ -19,7 +23,8 @@ import {
   LoginComponent,
   DashboardComponent,
   StartRecComponent,
-  HistoryComponent
+  HistoryComponent,
+  EditComponent
 } from './components'
 
 import NavTitle from './components/common/NavTitle'
@@ -39,11 +44,13 @@ const routes = {
   dashboard: {
     attach: (navigator) => (
       <DashboardComponent onNavigate={(target: string) => {
-        console.log(target)
+        console.log('nav tgt', target)
         switch (target) {
           case 'startRec':
             // falls through
           case 'history':
+            // falls through
+          case 'edit':
             navigator.push(routes[target])
             break
         }
@@ -57,7 +64,21 @@ const routes = {
   },
   history: {
     attach: (navigator) => (
-      <HistoryComponent onNavigate={() => navigator.pop()} />
+      <HistoryComponent onNavigate={(target: string) => {
+        switch (target) {
+          case 'dashboard':
+            navigator.pop()
+            break;
+
+          case 'edit':
+            navigator.push(routes['edit'])
+        }
+      }} />
+    )
+  },
+  edit: {
+    attach: (navigator) => (
+      <EditComponent onNavigate={() => navigator.pop()} />
     )
   }
 }
@@ -69,11 +90,13 @@ type RTTState = {
 export default class RedmineTimeTracker extends Component {
   state: RTTState;
   _detachNavigator: () => void;
+  _update: () => void;
 
-  constructor (props: any2) {
+  constructor (props: any) {
     super(props)
     this.state = {
-      init: Store.getState().init
+      init: Store.getState().init,
+      unsubscribe: () => {}
     }
     this._update = this._update.bind(this)
   }

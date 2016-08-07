@@ -2,7 +2,7 @@
 'use strict'
 import moment from 'moment'
 
-import type { Actions, Record } from '../types'
+import type { Action, Record } from '../types'
 
 export const migrate = (): Action => ({
   type: 'record-migrate'
@@ -11,13 +11,15 @@ export const migrate = (): Action => ({
 export const startRecording = (
   projectId: number,
   issueId: number,
-  comment?: string = ''
+  activityId: number,
+  comment?: string = '',
 ): Action => ({
   type: 'record-create',
   record: {
     id: -1,
     projectId: projectId,
     issueId: issueId,
+    activityId: activityId,
     comment: comment,
     startTime: moment().toISOString(),
     endTime: '',
@@ -31,4 +33,9 @@ export const stopRecording = (record: Record) => ({
     ...record,
     endTime: moment().toISOString()
   }
+})
+
+export const select = (record: Record) => ({
+  type: 'record-select',
+  record: record
 })

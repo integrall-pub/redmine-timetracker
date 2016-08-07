@@ -11,6 +11,12 @@ import {
   View
 } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
+import { List } from 'immutable'
+
+import type {
+  Issue,
+  RecordEdit
+} from '../types'
 
 import KeyboardAdaptive from './common/KeyboardAdaptive'
 import styles from './styles/fullscreen-form'
@@ -26,6 +32,19 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 type StartRecComponentProps = {
+  issues: List<Issue>,
+  recordEdit: RecordEdit,
+  actions: {
+    issue: {
+      loadIssues: () => void
+    },
+    recordEdit: {
+      editComment: (comment: string) => void,
+      search: (val: string) => void,
+      selectIssue: (issue: Issue) => void,
+      clear: () => void
+    }
+  },
   onNavigate: (target: string) => void
 }
 class StartRecComponent extends Component {
@@ -47,7 +66,7 @@ class StartRecComponent extends Component {
 
   render () {
     return (
-      <KeyboardAdaptive style={[styles.container]}>
+      <KeyboardAdaptive style={styles.container}>
         <Text style={styles.title}>No! What are you doing, yes?</Text>
         <Text style={styles.subtitle}>Issue</Text>
         <Typeahead
@@ -59,7 +78,7 @@ class StartRecComponent extends Component {
           suggest={this.props.recordEdit.searchActive}
           options={this.props.issues}
           keys={['id', 'tracker.name', 'subject']}
-          container={({ option }) => (<Text>{'#' + option.id + ' ' + option.tracker.name + ': ' + option.subject}</Text>)}>
+          container={({ option }: { option: Issue }) => (<Text>{'#' + option.id + ' ' + option.tracker.name + ': ' + option.subject}</Text>)}>
 
             <Text style={styles.subtitle}>Description (optional)</Text>
             <TextInput

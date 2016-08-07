@@ -2,7 +2,7 @@
 'use strict'
 import { encode } from 'base-64'
 
-import type { Activity, Issue, Project } from '../types'
+import type { Activity, Issue, Project } from '../../types'
 
 export const getKey = (
   url: string,

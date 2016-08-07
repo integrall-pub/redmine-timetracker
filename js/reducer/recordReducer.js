@@ -2,17 +2,17 @@
 'use strict'
 import { List } from 'immutable'
 
-import type { Action, Record, RecordState } from '../types'
+import type {
+  Action,
+  Record
+} from '../types'
 
-const initialState = () => ({
-  current: null,
-  all: List()
-})
+const initialState = List()
 
 export default function recordReducer (
-  state: RecordState = initialState(),
+  state: List<Record> = initialState,
   action: Action
-): RecordState {
+): List<Record> {
   switch (action.type) {
     case 'record-load-done':
       // falls through
@@ -22,10 +22,9 @@ export default function recordReducer (
       // falls through
     case 'record-delete-done':
       if (!action.success) { return state }
-      return {
-        current: action.current || null,
-        all: action.records || List()
-      }
+      return (action.records || List()).sort(
+        (a, b) => a.startTime.localeCompare(b.startTime)
+      )
 
     default:
       return state

@@ -35,7 +35,7 @@ export default function Navbar ({
 
 type NavItemProps = {
   active: boolean,
-  children: any,
+  children?: any,
   onPress: () => void
 }
 const NavItem = ({
@@ -53,7 +53,7 @@ const NavItem = ({
 )
 
 type AddItemProps = {
-  onPress: () => void
+  onPress?: () => void
 }
 const AddItem = ({
   onPress = () => {}

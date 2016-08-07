@@ -4,32 +4,32 @@
 import React, { Component } from 'react'
 import {
   StyleSheet,
-  View,
+  ScrollView,
   Keyboard,
   Dimensions
 } from 'react-native'
 
 type StyleProp = number|string
 
-export type KeyboardAdaptiveProps = {
+export type KeyboardAdaptiveScrollProps = {
   style: any,
   children?: any
 }
-type KeyboardAdaptiveState = {
-  visibleHeight: number
+type KeyboardAdaptiveScrollState = {
+  kbHeight: number
 }
-export default class KeyboardAdaptive extends Component {
-  props: KeyboardAdaptiveProps;
-  state: KeyboardAdaptiveState;
+export default class KeyboardAdaptiveScroll extends Component {
+  props: KeyboardAdaptiveScrollProps;
+  state: KeyboardAdaptiveScrollState;
   _keyboardShow: (e: any) => void;
   _keyboardHide: (e: any) => void;
   _keyboardShowSubscription: any;
   _keyboardHideSubscription: any;
 
-  constructor (props: KeyboardAdaptiveProps) {
+  constructor (props: KeyboardAdaptiveScrollProps) {
     super(props)
     this.state = {
-      visibleHeight: 0
+      kbHeight: 0
     }
 
     this._keyboardShow = this._keyboardShow.bind(this)
@@ -46,7 +46,7 @@ export default class KeyboardAdaptive extends Component {
       this._keyboardHide
     )
     this.setState({
-      visibleHeight: Dimensions.get('window').height
+      kbHeight: 0
     })
   }
 
@@ -57,21 +57,21 @@ export default class KeyboardAdaptive extends Component {
 
   _keyboardShow (e: { endCoordinates: { height: number } }) {
     this.setState({
-      visibleHeight: Dimensions.get('window').height - e.endCoordinates.height
+      kbHeight: e.endCoordinates.height
     })
   }
 
   _keyboardHide () {
     this.setState({
-      visibleHeight: Dimensions.get('window').height
+      kbHeight: 0
     })
   }
 
   render () {
     return (
-      <View style={[ this.props.style, { height: this.state.visibleHeight } ]}>
+      <ScrollView style={[ this.props.style, { marginBottom: this.state.kbHeight } ]}>
         {this.props.children}
-      </View>
+      </ScrollView>
     )
   }
 }

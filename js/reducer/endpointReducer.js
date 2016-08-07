@@ -1,12 +1,15 @@
 /* @flow */
-import type { Action } from '../types'
+import type {
+  Action,
+  Endpoint
+} from '../types'
 
 const initialState = { url: '', valid: false }
 
 export default function (
-  state: string = initialState,
+  state: Endpoint = initialState,
   action: Action
-): string {
+): Endpoint {
   switch(action.type) {
     case 'api-endpoint-set':
       return validate(action.endpoint)

@@ -10,6 +10,11 @@ import {
   View
 } from 'react-native'
 
+import type {
+  ApiKey,
+  Login
+} from '../types'
+
 import KeyboardAdaptive from './common/KeyboardAdaptive'
 import styles from './styles/fullscreen-form'
 
@@ -18,9 +23,16 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 type LoginComponentProps = {
-  setUsername: (username: string) => void,
-  setPassword: (password: string) => void,
-  onLogin: () => void
+  login: Login,
+  apiKey: ApiKey,
+  actions: {
+    dismissFail: () => void,
+    setUsername: (username: string) => void,
+    setPassword: (password: string) => void,
+    tryLogin: (login: Login) => void
+  },
+  onContinue: () => void
+  // onLogin: () => void
 }
 class LoginComponent extends Component {
   props: LoginComponentProps;

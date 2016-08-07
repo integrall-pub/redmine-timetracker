@@ -1,12 +1,15 @@
 /* @flow */
 'use strict'
 
-import type { Action, InitState } from '../types'
+import type {
+  Action,
+  InitState
+} from '../types'
 
 const initialState = 'waiting'
 
 export default function loginReducer (
-  state?: Login = initialState,
+  state?: InitState = initialState,
   action: Action
 ) {
   switch (action.type) {

@@ -13,6 +13,10 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { List } from 'immutable'
 
+import type {
+  Project
+} from '../../types'
+
 type ProjectViewProps = {
   project: Project,
   expandedIds?: List<number>,
@@ -29,30 +33,33 @@ export default function ProjectView ({
 }: ProjectViewProps) {
   return (
     <View>
-      <TouchableHighlight
-        activeOpacity={0.8}
-        underlayColor='gray'
-        disabled={!project || !project.children || project.children.size === 0}
-        style={[
-          styles.projectRow,
-          depthStyles(project.depth)
-          ]}
-        onPress={() => onExpand(project.id)}>
-        <View style={{ flexDirection: 'row', flex: 1 }}>
+      <View style={[
+        styles.projectRow,
+        depthStyles(project.depth || 0)
+      ]}>
+        <TouchableHighlight
+          activeOpacity={0.8}
+          underlayColor='gray'
+          disabled={!project || !project.children || project.children.size === 0}
+          style={styles.projectButton}
+          onPress={() => onExpand(project.id)}>
+          <View style={{ flexDirection: 'row', flex: 1 }}>
 
-          <ExpandCaret project={project} />
+            <ExpandCaret
+              project={project}
+              expanded={expandedIds.includes(project.id)} />
 
-          <Text style={styles.projectName}>
-            {Array(project.depth).join('  ')}{project.name}
-          </Text>
+            <Text style={styles.projectName}>
+              {Array(project.depth).join('  ')}{project.name}
+            </Text>
 
-          <RecButton
-            project={project}
-            disabled={disabled}
-            onPress={() => onRec(project.id)} />
-
-        </View>
-      </TouchableHighlight>
+          </View>
+        </TouchableHighlight>
+        <RecButton
+          project={project}
+          disabled={disabled}
+          onPress={() => onRec(project.id)} />
+      </View>
 
       {(expandedIds.includes(project.id)
         ? project.children || List()
@@ -70,10 +77,10 @@ export default function ProjectView ({
   )
 }
 
-const ExpandCaret = ({ project }: { project: Project }) => (
+const ExpandCaret = ({ project, expanded }: { project: Project, expanded: boolean }) => (
   <View style={styles.expandCaret}>
     {project && project.children && project.children.size > 0
-      ? <Icon name='angle-down' size={18} color='#333333' />
+      ? <Icon name={ expanded ? 'angle-up' : 'angle-down'} size={18} color='#333333' />
       : null}
   </View>
 )
@@ -113,7 +120,10 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: '#333333',
     flexDirection: 'row',
-    flex: 1,
+    flex: 1
+  },
+  projectButton: {
+    flex: 5,
     padding: 10
   },
   projectName: {
@@ -130,6 +140,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingLeft: 10,
-    paddingRight: 10
+    paddingRight: 10,
+    flex: 1
   }
 })

@@ -7,6 +7,7 @@ import LoginComponent from './LoginComponent'
 import DashboardComponent from './DashboardComponent'
 import StartRecComponent from './StartRecComponent'
 import HistoryComponent from './HistoryComponent'
+import EditComponent from './EditComponent'
 
 export {
   SplashComponent,
@@ -14,5 +15,6 @@ export {
   LoginComponent,
   DashboardComponent,
   StartRecComponent,
-  HistoryComponent
+  HistoryComponent,
+  EditComponent
 }

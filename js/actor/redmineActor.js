@@ -2,7 +2,7 @@
 import type { Dispatch } from 'redux'
 import type { Action, ApiKey, AppState } from '../types'
 
-import * as client from '../redmine/client'
+import * as client from '../dao/redmine/client'
 
 export default function (state: AppState, dispatch: Dispatch) {
   let lastAction = state.lastAction
@@ -14,8 +14,8 @@ export default function (state: AppState, dispatch: Dispatch) {
     case 'api-login-request':
       client.getKey(
         url,
-        lastAction.login.username,
-        lastAction.login.password)
+        lastAction.login.username || '',
+        lastAction.login.password || '')
         .then((k) => {
           dispatch({
             type: 'api-login-request-success'
@@ -63,16 +63,6 @@ export default function (state: AppState, dispatch: Dispatch) {
           success: false,
           issues: []
         }))
-      break
-
-    case 'issues-load-single':
-      break
-      loadIssue(
-        dispatch,
-        url,
-        key,
-        lastAction.issueId
-      )
       break
   }
 }

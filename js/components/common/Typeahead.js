@@ -19,15 +19,16 @@ type TypeaheadProps = {
   value?: string,
   style: any,
   suggest?: boolean,
-  options?: List<string>,
+  options?: List<any>,
   keys?: Array<string>,
-  container: any,
-  children: any,
+  container: (props: { option: any }) => any,
+  children?: any,
   onChange?: (search: string) => void,
   onSelect?: (selected: any) => void
 }
 type TypeaheadState = {
-  left: number
+  left: number,
+  width: number
 }
 export default class Typeahead extends Component {
   props: TypeaheadProps;
@@ -57,8 +58,8 @@ export default class Typeahead extends Component {
       style = null,
       suggest = true,
       options = List(),
-      keys = null,
-      container = null,
+      keys = [],
+      container = () => {},
       children,
       onChange = () => {},
       onSelect = () => {}
@@ -113,8 +114,8 @@ export default class Typeahead extends Component {
   }
 }
 
-const filterOptions = (value: string, options: List<string>, keys?: Array<string>) => (
-  List(new Fuse(options.toArray() , keys !== null ? { keys: keys } : {}).search(value))
+const filterOptions = (value: string, options: List<string>, keys: Array<string>) => (
+  List(new Fuse(options.toArray() , keys.length > 0 ? { keys: keys } : {}).search(value))
 )
 
 const styles = StyleSheet.create({

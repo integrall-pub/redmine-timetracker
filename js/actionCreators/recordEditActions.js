@@ -1,7 +1,12 @@
 /* @flow */
 'use strict'
 
-import type { Action, Issue } from '../types'
+import type { Action, Issue, Record } from '../types'
+
+export const load = (record: Record) => ({
+  type: 'rec-edit-load',
+  record: record
+})
 
 export const search = (search: string, active: boolean = true): Action => ({
   type: 'rec-edit-issue-search',

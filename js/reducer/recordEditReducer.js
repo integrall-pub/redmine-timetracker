@@ -2,7 +2,12 @@
 'use strict'
 import { List } from 'immutable'
 
-import type { Action, Issue, Record } from '../types'
+import type {
+  Action,
+  Issue,
+  Record,
+  RecordEdit
+} from '../types'
 
 const initialState = () => ({
   search: '',
@@ -11,6 +16,7 @@ const initialState = () => ({
     id: -1,
     projectId: -1,
     issueId: -1,
+    activityId: -1,
     comment: '',
     startTime: '',
     endTime: '',
@@ -19,10 +25,16 @@ const initialState = () => ({
 })
 
 export default function recordEditReducer (
-  state?: List<Issue> = initialState(),
+  state?: RecordEdit = initialState(),
   action: Action
 ) {
   switch (action.type) {
+    case 'rec-edit-load':
+      return {
+        ...state,
+        record: action.record
+      }
+
     case 'rec-edit-issue-search':
       return {
         ...state,

@@ -10,44 +10,72 @@ import {
   TouchableHighlight,
   View
 } from 'react-native'
-import { List } from 'immutable'
+import { List, Range } from 'immutable'
+// import ViewPager from 'react-native-viewpager'
+import ViewPager from './ViewPager'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import moment from 'moment'
 
-import type { Issue, Record } from '../../types'
+import type {
+  Issue,
+  Record,
+  RecordDetails
+} from '../../types'
 
 type WeekViewProps = {
   week: moment,
-  records?: {
-    current?: Record,
-    all: List<Record>
-  }
+  records: List<Record>,
+  selected?: RecordDetails
 }
 export default function WeekView ({
-  week,
-  records = {
-    current: null,
-    all: List()
-  }
+  records,
+  selected
 }: WeekViewProps) {
+  return (
+    <ViewPager
+      initialPage={0}
+      dataSource={buildDataSource(records)}
+      renderPage={renderWeek({ records, selected })}
+      isLoop={false}
+      autoPlay={false} />
+  )
+}
+
+const buildDataSource = (records: List<Record>) => {
+  let ds = new ViewPager.DataSource(
+    (idx: number) => (moment(records.last() ? records.last().startTime : moment())).add(idx, 'week')
+  )
+  console.log('data', ds.getPageData(0))
+  return ds
+}
+
+type DataProps = {
+  records: List<Record>,
+  selected?: RecordDetails
+}
+const renderWeek = ({
+  records = List(),
+  selected
+}: DataProps) => (week) => {
+  console.log('renderWeek called')
   let start = week.clone().startOf('isoWeek')
   let end = week.clone().endOf('isoWeek')
-  let weekRecords = records.all.filter(
+  let weekRecords = records.filter(
     (r) => (
       r.endTime !== '' &&
       moment(r.startTime).isBetween(start, end)
     )
   )
   return (
-    <View style={{ flexDirection: 'row', marginTop: 3 }}>
-      <DayView records={weekRecords} day={start} />
-      <DayView records={weekRecords} day={start.clone().add(1, 'day')} />
-      <DayView records={weekRecords} day={start.clone().add(2, 'day')} />
-      <DayView records={weekRecords} day={start.clone().add(3, 'day')} />
-      <DayView records={weekRecords} day={start.clone().add(4, 'day')} />
+    <View style={{ flex: 1, flexDirection: 'row', marginTop: 3 }}>
+      <DayView records={weekRecords} day={start} selected={selected} />
+      <DayView records={weekRecords} day={start.clone().add(1, 'day')} selected={selected} />
+      <DayView records={weekRecords} day={start.clone().add(2, 'day')} selected={selected} />
+      <DayView records={weekRecords} day={start.clone().add(3, 'day')} selected={selected} />
+      <DayView records={weekRecords} day={start.clone().add(4, 'day')} selected={selected} />
       <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'center' }}>
-        <DayView records={weekRecords} day={start.clone().add(5, 'day')} />
-        <DayView records={weekRecords} day={start.clone().add(6, 'day')} />
+        <DayView records={weekRecords} day={start.clone().add(5, 'day')} selected={selected} />
+        <DayView records={weekRecords} day={start.clone().add(6, 'day')} selected={selected} />
       </View>
     </View>
   )
@@ -55,44 +83,63 @@ export default function WeekView ({
 
 type DayViewProps = {
   day: moment,
-  records?: List
+  records?: List<Record>,
+  selected?: RecordDetails
 }
 const DayView = ({
   day,
-  records = List()
+  records = List(),
+  selected
 }: DayViewProps) => (
   <View style={{ flex: 1, flexDirection: 'column', borderLeftWidth: 1 }}>
     <Text style={{ textAlign: 'center' }}>{day.format('dd')}</Text>
     <Text style={{ textAlign: 'center' }}>{day.format('D.M.')}</Text>
     <View style={{ flexDirection: 'row', height: 100 }}>
       {records.filter((r) => moment(r.startTime).isBetween(day.clone().startOf('day'), day.clone().endOf('day'))).map((r) => (
-        <EntryView key={r.id} start={r.startTime} end={r.endTime} />
+        <EntryView key={r.id} record={r} selected={selected && r.id === selected.id} />
       ))}
     </View>
   </View>
 )
 
 type EntryViewProps = {
-  start: string,
-  end: string
+  record: Record,
+  selected?: boolean,
+  onPress?: (id: number) => void
 }
 const EntryView = ({
-  start,
-  end
+  record,
+  selected = false,
+  onPress = () => {}
 }: EntryViewProps) => {
-  let startAsHours = moment.duration(moment(start).diff(moment(start).startOf('day'))).asHours()
-  let durationAsHours = moment.duration(moment(end).diff(moment(start))).asHours()
+  let startAsHours = moment.duration(
+    moment(record.startTime).diff(
+      moment(record.startTime).startOf('day')
+    )
+  ).asHours()
+  let durationAsHours = moment.duration(
+    moment(record.endTime).diff(
+      moment(record.startTime)
+    )
+  ).asHours()
   return (
-    <View style={{
+    <TouchableHighlight
+      activeOpacity={0.6}
+      underlayColor='gray'
+      onPress={() => onPress(record.id)}
+      style={{
       position: 'absolute',
       left: 0,
       top: startAsHours / 24 * 100,
       right: 0,
       height: durationAsHours / 24 * 100,
       backgroundColor: 'lightblue',
-      borderWidth: 1,
-      borderRadius: 2,
+      borderColor: selected ? 'gray' : 'lightblue',
+      borderWidth: selected ? 2 : 1,
+      borderRadius: 3,
       margin: 3
-    }} />
+    }}>
+      <View style={{ position: 'absolute', left: 0, top: 0, right: 0, bottom: 0 }} />
+    </TouchableHighlight>
   )
 }

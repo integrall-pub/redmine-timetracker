@@ -40,17 +40,17 @@ export default function loginReducer (
       }
 
     case 'login-set':
-      let username = action.username !== undefined
-        ? action.username
-        : state.username
-      let password = action.password !== undefined
-        ? action.password
-        : state.password
+      let username: string = action.login.username
+        ? action.login.username
+        : state.username || ''
+      let password: string = action.login.password
+        ? action.login.password
+        : state.password || ''
       return {
         ...state,
         username: username,
         password: password,
-        valid: username.length > 0 && password.length > 0
+        valid: username && username.length > 0 && password && password.length > 0
       }
 
     case 'login-dismiss-fail':

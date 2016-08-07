@@ -1,22 +1,26 @@
 /* @flow */
 'use strict'
 
-import type { Actions, Login } from '../types'
+import type { Action, Login } from '../types'
 
 export const setUsername = (username: string): Action => ({
   type: 'login-set',
-  username: username,
-  valid: false,
-  progress: false,
-  fail: false
+  login: {
+    username: username,
+    valid: false,
+    progress: false,
+    fail: false
+  }
 })
 
 export const setPassword = (password: string): Action => ({
   type: 'login-set',
-  password: password,
-  valid: false,
-  progress: false,
-  fail: false
+  login: {
+    password: password,
+    valid: false,
+    progress: false,
+    fail: false
+  }
 })
 
 export const tryLogin = (login: Login): Action => ({

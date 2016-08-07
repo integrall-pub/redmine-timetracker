@@ -13,21 +13,25 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome'
 import moment from 'moment'
 
-import type { Issue, Record } from '../../types'
+import type {
+  Issue,
+  Record,
+  RecordDetails
+} from '../../types'
 
 type RecordViewProps = {
-  record?: Record,
-  onEdit?: (record: Record) => void,
+  record?: RecordDetails|null,
+  onEdit?: (record: RecordDetails) => void,
   onStop?: (record: Record) => void,
   onDelete?: (record: Record) => void
 }
 export default function RecordView ({
-  record = null,
+  record,
   onEdit = () => {},
   onStop = () => {},
   onDelete = () => {}
 }: RecordViewProps) {
-  if (record === null) {
+  if (!record) {
     return (
       <View style={{ borderWidth: 1, borderRadius: 3, margin: 5, padding: 10, justifyContent: 'center', alignItems: 'center' }}>
         <Text>No tracking in progress</Text>
@@ -55,7 +59,7 @@ export default function RecordView ({
               </View>
             </View>
             <View style={{ paddingTop: 3, flexDirection: 'row' }}>
-              <Text>{issue ? ('#' + issue.id + ' ' + issue.tracker.name + ':') : ('#' + record.issueId)}</Text>
+              <Text>{issue ? ('#' + issue.id + ' ' + issue.tracker.name + ':') : ('#' + record.issue.id)}</Text>
               <View  style={{ paddingRight: 2, flex: 1 }}>
                 <Text>{issue ? (issue.subject) : ''}</Text>
                 <Text style={{ paddingTop: 2 }}>{record.comment}</Text>
@@ -67,9 +71,15 @@ export default function RecordView ({
               activeOpacity={0.8}
               underlayColor='gray'
               style={{ padding: 7, flex: 1 }}
-              onPress={() => (
-                (isRecording ? onStop : onDelete)(record)
-              )}>
+              onPress={() => {
+                if (record) {
+                  if (isRecording) {
+                    onStop(record.base)
+                  } else {
+                    onDelete(record.base)
+                  }
+                }
+              }}>
               <Icon name={isRecording ? 'stop-circle' : 'trash'} size={22} />
             </TouchableHighlight>
             <TouchableHighlight
@@ -81,7 +91,11 @@ export default function RecordView ({
                 flex: 1,
                 opacity: isSynced? 0.5 : 1.0
               }}
-              onPress={() => onEdit(record)}>
+              onPress={() => {
+                if (record) {
+                  onEdit(record)
+                }
+              }}>
               <Icon name='pencil' size={22} />
             </TouchableHighlight>
           </View>
