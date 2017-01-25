@@ -24,8 +24,9 @@ export const setPassword = (password: string): Action => ({
 })
 
 export const tryLogin = (login: Login): Action => ({
-  type: 'api-login-request',
-  login: login
+  type: 'login-request',
+  username: login.username,
+  password: login.password
 })
 
 export const dismissFail = () => ({

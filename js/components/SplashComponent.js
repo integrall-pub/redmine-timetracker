@@ -20,9 +20,6 @@ type SplashComponentProps = {
   actions: {
     init: {
       load: () => void
-    },
-    record: {
-      migrate: () => void
     }
   }
 }
@@ -35,7 +32,6 @@ class SplashComponent extends Component {
 
   componentDidMount () {
     this.props.actions.init.load()
-    setTimeout(() => this.props.actions.record.migrate(), 1000) // TODO: Timeout...
   }
 
   render () {
@@ -49,8 +45,7 @@ export default connect(
   ({ endpoint, apiKey }) => ({ endpoint, apiKey }),
   (dispatch) => ({
     actions: {
-      init: bindActionCreators(initActions, dispatch),
-      record: bindActionCreators(recordActions, dispatch)
+      init: bindActionCreators(initActions, dispatch)
     }
   })
 )(SplashComponent)

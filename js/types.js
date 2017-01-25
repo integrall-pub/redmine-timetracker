@@ -2,6 +2,10 @@
 'use strict'
 import type { List } from 'immutable'
 
+export type Maybe<T>
+  = { kind: 'just', just: T }
+  | { kind: 'nothing' }
+
 export type InitState = 'waiting'|'success'|'fail'
 
 export type ApiKey = { key: string, empty: boolean }
@@ -14,6 +18,12 @@ export type Login = {
   fail: boolean
 }
 
+export type Connection = {
+  url: string,
+  key: string,
+  valid: boolean
+}
+
 export type Project = {
   id: number,
   name: string,
@@ -21,9 +31,6 @@ export type Project = {
   description: string,
   parent?: ProjectRef,
   status: number,
-  custom_fields: Array<CustomField>,
-  created_on: string,
-  updated_on: string,
   hasTracking: boolean,
   depth?: number,
   children?: List<Project>
@@ -36,6 +43,18 @@ export type CustomField = {
   id: number,
   name: string,
   value: string
+}
+
+export type RealmProject = {
+  id: number,
+  name: string,
+  identifier: string,
+  description: string,
+  parentId: number,
+  parentName: string,
+  status: number,
+  hasTracking: boolean,
+  depth: number,
 }
 
 export type Issue = {
@@ -54,6 +73,18 @@ export type Author = {
 export type Tracker = {
   id: number,
   name: string
+}
+
+export type RealmIssue = {
+  id: number,
+  subject: string,
+  description: string,
+  authorId: number,
+  authorName: string,
+  projectId: number,
+  projectName: string,
+  trackerId: number,
+  trackerName: string
 }
 
 export type RecordEdit = {
@@ -95,57 +126,67 @@ export type RecordDetailsState = {
   selected?: RecordDetails
 }
 
-type ProjectAction =
-  { type: 'projects-load' } |
-  { type: 'projects-load-done', success: boolean, projects: Array<Project> } |
-  { type: 'project-expand', projectId: number } |
-  { type: 'project-select', projectId: number }
+type PropertyAction
+  = { type: 'prop-test-request' }
+  | { type: 'prop-test', success: boolean }
+  | { type: 'url-set-request', url: string }
+  | { type: 'url-set', url: string, success: boolean }
+  | { type: 'login-request', username: string, password: string }
+  | { type: 'login', success: boolean }
+  | { type: 'logout-request' }
+  | { type: 'logout' }
 
-type IssueAction =
-  { type: 'issues-load' } |
-  { type: 'issues-load-done', success: boolean, issues: Array<Issue> } |
-  { type: 'issue-load-single', issueId: number } |
-  { type: 'issue-load-single-done', success: boolean, issue?: Issue }
+type ProjectAction
+  = { type: 'projects-load-request' }
+  | { type: 'projects-load', success: boolean, projects: List<Project> }
+  | { type: 'project-expand', projectId: number }
+  | { type: 'project-select', projectId: number }
 
-type RecordAction =
-  { type: 'record-migrate' } |
-  { type: 'record-load' } |
-  { type: 'record-load-done', success: boolean, records: List<Record> } |
-  { type: 'record-create', record: Record } |
-  { type: 'record-create-done', success: boolean, records: List<Record> } |
-  { type: 'record-edit', record: Record } |
-  { type: 'record-edit-done', success: boolean, records: List<Record> } |
-  { type: 'record-delete', record: Record } |
-  { type: 'record-delete-done', success: boolean, records: List<Record> }
+type IssueAction
+  = { type: 'issues-load-request' }
+  | { type: 'issues-load', success: boolean, issues: List<Issue> }
+  | { type: 'issue-load-single-request', issueId: number }
+  | { type: 'issue-load-single', success: boolean, issue?: Issue }
 
-type RecordDetailsAction =
-  { type: 'record-details-current', record?: RecordDetails } |
-  { type: 'record-details-selected', record?: RecordDetails } |
-  { type: 'record-select', record: Record }
+type RecordAction
+  = { type: 'record-migrate' }
+  | { type: 'record-load' }
+  | { type: 'record-load-done', success: boolean, records: List<Record> }
+  | { type: 'record-create', record: Record }
+  | { type: 'record-create-done', success: boolean, records: List<Record> }
+  | { type: 'record-edit', record: Record }
+  | { type: 'record-edit-done', success: boolean, records: List<Record> }
+  | { type: 'record-delete', record: Record }
+  | { type: 'record-delete-done', success: boolean, records: List<Record> }
 
-type RecordEditAction =
-  { type: 'rec-edit-load', record: Record } |
-  { type: 'rec-edit-issue-select', issueId: number } |
-  { type: 'rec-edit-issue-search', search: string, active: boolean } |
-  { type: 'rec-edit-comment', comment: string } |
-  { type: 'rec-edit-clear' }
+type RecordDetailsAction
+  = { type: 'record-details-current', record?: RecordDetails }
+  | { type: 'record-details-selected', record?: RecordDetails }
+  | { type: 'record-select', record: Record }
 
+type RecordEditAction
+  = { type: 'rec-edit-load', record: Record }
+  | { type: 'rec-edit-issue-select', issueId: number }
+  | { type: 'rec-edit-issue-search', search: string, active: boolean }
+  | { type: 'rec-edit-comment', comment: string }
+  | { type: 'rec-edit-clear' }
 
-export type Action =
-  { type: 'load-connection' } |
-  { type: 'load-connection-done', success: boolean } |
-  { type: 'api-login-request-fail' } |
-  { type: 'api-login-request-success' } |
-  { type: 'api-login-request', login: Login } |
-  { type: 'api-endpoint-set', endpoint: string } |
-  { type: 'api-key-set', key: string } |
-  { type: 'login-set', login: Login } |
-  { type: 'login-dismiss-fail' } |
-  ProjectAction |
-  IssueAction |
-  RecordAction |
-  RecordEditAction |
-  RecordDetailsAction
+export type Action
+  = { type: 'load-connection' }
+  | { type: 'load-connection-done', success: boolean }
+  | { type: 'api-login-request-fail' }
+  | { type: 'api-login-request-success' }
+  | { type: 'api-login-request', login: Login }
+  | { type: 'api-endpoint-set', endpoint: string }
+  | { type: 'api-key-set', key: string }
+  | { type: 'login-set', login: Login }
+  | { type: 'login-dismiss-fail' }
+  | PropertyAction
+  | ProjectAction
+  | IssueAction
+  | RecordAction
+  | RecordEditAction
+  | RecordDetailsAction
 
   export type AppState = {
     lastAction: Action,

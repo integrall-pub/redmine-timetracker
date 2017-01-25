@@ -13,10 +13,10 @@ export default function loginReducer (
   action: Action
 ) {
   switch (action.type) {
-    case 'load-connection-done':
-      return action.success
-        ? 'success'
-        : 'fail'
+    case 'prop-test':
+    return action.success
+      ? 'success'
+      : 'fail'
 
     default:
       return state

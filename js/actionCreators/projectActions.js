@@ -4,7 +4,7 @@
 import type { Action } from '../types'
 
 export const loadProjects = (): Action => ({
-  type: 'projects-load'
+  type: 'projects-load-request'
 })
 
 export const expandProject = (id: number): Action => ({

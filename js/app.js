@@ -5,11 +5,18 @@ import React, { Component } from 'react'
 import {
   Platform,
   StyleSheet,
-  Navigator,
   Text,
   View
 } from 'react-native'
 import { Provider, connect } from 'react-redux'
+import {
+  actions as routerActions,
+  NavBar,
+  Route,
+  Schema,
+  TabBar,
+  TabRoute
+} from 'react-native-router-redux'
 
 import type {
   InitState
@@ -28,6 +35,7 @@ import {
 } from './components'
 
 import NavTitle from './components/common/NavTitle'
+import Router from './components/common/Router'
 import attachNavigator from './util/attachNavigator'
 
 const routes = {
@@ -83,6 +91,20 @@ const routes = {
   }
 }
 
+// define your routes
+const defaultSchema = {
+  navBar: NavBar,
+  navLeftColor: '#FFFFFF',
+  navTint: '#224655',
+  navTitleColor: '#FFFFFF',
+  navTitleStyle: {
+    fontFamily: 'Avenir Next',
+    fontSize: 18,
+  },
+  statusStyle: 'light-content',
+  tabBar: TabBar,
+}
+
 type RTTState = {
   init: InitState,
   unsubscribe: () => void
@@ -120,7 +142,7 @@ export default class RedmineTimeTracker extends Component {
   }
 
   render() {
-    return (
+    /* return (
       <Provider store={Store}>
         {this.state.init === 'waiting'
           ? (<SplashComponent />)
@@ -132,6 +154,24 @@ export default class RedmineTimeTracker extends Component {
                 : routes.endpoint}
               renderScene={(route, navigator) => route.attach(navigator)} />
           )}
+      </Provider>
+    ) */
+
+    return (
+      <Provider store={Store}>
+        <Router initial={'splash'}>
+          <Schema name='default' {...defaultSchema} />
+
+          <Route name='splash' component={SplashComponent} type='reset' hideNavBar />
+          <Route name='endpoint' component={EndpointComponent} hideNavBar />
+          <Route name='login' component={LoginComponent} hideNavBar />
+          <Route name='start-rec' component={StartRecComponent} hideNavBar />
+
+          <TabRoute name='tab-bar'>
+            <Route name='dashboard' component={DashboardComponent} />
+            <Route name='history' component={HistoryComponent} />
+          </TabRoute>
+        </Router>
       </Provider>
     )
   }

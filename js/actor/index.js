@@ -1,10 +1,8 @@
 /* @flow */
 import type { Store, Dispatch } from 'redux'
 
-import redmineActor from './redmineActor'
-import storageActor from './storageActor'
-import recordActor from './recordActor'
-import recordDetailsActor from './recordDetailsActor'
+import dataAccessActor from './dataAccessActor'
+import * as dao from '../dao'
 
 type Actor = (store: Store, dispatch: Dispatch) => void
 
@@ -26,8 +24,5 @@ const createBind = (
 }
 
 export const bind = createBind(
-  redmineActor,
-  storageActor,
-  recordActor(),
-  recordDetailsActor
+  dataAccessActor(dao)
 )

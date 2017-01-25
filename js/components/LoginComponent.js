@@ -31,7 +31,6 @@ type LoginComponentProps = {
     setPassword: (password: string) => void,
     tryLogin: (login: Login) => void
   },
-  onContinue: () => void
   // onLogin: () => void
 }
 class LoginComponent extends Component {
@@ -92,11 +91,7 @@ class LoginComponent extends Component {
             onPress={() => {
               this.refs.usernameInput.blur()
               this.refs.passwordInput.blur()
-              if (this.props.apiKey.empty) {
-                this.props.actions.tryLogin(this.props.login)
-              } else {
-                this.props.onContinue()
-              }
+              this.props.actions.tryLogin(this.props.login)
             }}>
             <Text style={styles.button}>
               {this.props.apiKey.empty

@@ -23,7 +23,7 @@ import { connect } from 'react-redux'
 type EndpointComponentProps = {
   endpoint: Endpoint,
   setEndpoint: (url: string) => void,
-  onContinue: () => void
+  submitEndpoint: (url: string) => void
 }
 class EndpointComponent extends Component {
   props: EndpointComponentProps;
@@ -63,7 +63,7 @@ class EndpointComponent extends Component {
             ]}
             onPress={() => {
               this.refs.endpointInput.blur()
-              this.props.onContinue()
+              this.props.submitEndpoint(this.props.endpoint.url)
             }}>
             <Text style={styles.button}>Tap here to continue</Text>
           </TouchableHighlight>

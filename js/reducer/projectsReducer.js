@@ -14,7 +14,7 @@ export default function loginReducer (
   action: Action
 ) {
   switch (action.type) {
-    case 'projects-load-done':
+    case 'projects-load':
       return action.success
         ? parseRoots(List(action.projects))
         : initialState
@@ -24,16 +24,11 @@ export default function loginReducer (
   }
 }
 
-const parse = (project: Project): Project => ({
-  ...project,
-  hasTracking: List(project.enabled_modules || []).map((m) => m.name).contains('time_tracking')
-})
-
-const parseRoots = (projects: List<Project>): List<Project> => (
-  projects.reduce((roots, p) => (
+function parseRoots (projects: List<Project>): List<Project> {
+  return projects.reduce((roots, p) => (
     p.parent === undefined
       ? roots.push({
-        ...parse(p),
+        ...p,
         depth: 0,
         children: parseChildren(projects, p.id)
       })
@@ -41,7 +36,7 @@ const parseRoots = (projects: List<Project>): List<Project> => (
       List()
     )
     // .reduce(flattenChildren, { depth: 1, projects: List() }).projects
-)
+}
 
 const parseChildren = (
   projects: List<Project>,
@@ -51,7 +46,7 @@ const parseChildren = (
   projects.reduce((children, p) => (
     p.parent && p.parent.id === parentId
       ? children.push({
-        ...parse(p),
+        ...p,
         depth: parentDepth + 1,
         children: parseChildren(projects, p.id, parentDepth + 1)
       })

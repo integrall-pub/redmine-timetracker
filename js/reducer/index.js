@@ -1,6 +1,8 @@
 /* @flow */
 import { combineReducers } from 'redux'
 
+import { reducer as router } from 'react-native-router-redux'
+
 import lastActionReducer from './lastActionReducer'
 import initReducer from './initReducer'
 import endpointReducer from './endpointReducer'
@@ -29,5 +31,6 @@ export default combineReducers({
   issues: issuesReducer,
   records: recordReducer,
   recordEdit: recordEditReducer,
-  recordDetails: recordDetailsReducer
+  recordDetails: recordDetailsReducer,
+  router: router
 })

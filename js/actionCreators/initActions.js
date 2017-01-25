@@ -4,5 +4,5 @@
 import type { Action } from '../types'
 
 export const load = (): Action => ({
-  type: 'load-connection'
+  type: 'prop-test-request'
 })
