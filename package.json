@@ -9,18 +9,18 @@
   },
   "dependencies": {
     "base-64": "^0.1.0",
-    "fbjs": "^0.8.3",
-    "fuse.js": "^2.3.0",
+    "fbjs": "^0.8.9",
+    "fuse.js": "^2.6.1",
     "immutable": "^3.8.1",
-    "moment": "^2.14.1",
-    "react": "15.2.1",
-    "react-native": "0.31.0",
-    "react-native-router-redux": "github:Qwikly/react-native-router-redux#768f25",
-    "react-native-vector-icons": "^2.0.3",
-    "react-native-viewpager": "^0.2.11",
-    "react-redux": "^4.4.5",
+    "moment": "^2.17.1",
+    "react": "^15.2.1",
+    "react-native": "^0.31.0",
+    "react-native-router-redux": "github:qwikly/react-native-router-redux#768f25",
+    "react-native-vector-icons": "^2.1.0",
+    "react-native-viewpager": "^0.2.13",
+    "react-redux": "^4.4.6",
     "realm": "^0.14.3",
-    "redux": "^3.5.2"
+    "redux": "^3.6.0"
   },
   "devDependencies": {
     "flow": "^0.2.3",
