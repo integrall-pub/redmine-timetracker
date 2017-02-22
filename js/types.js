@@ -143,7 +143,7 @@ type ProjectAction
   | { type: 'project-select', projectId: number }
 
 type IssueAction
-  = { type: 'issues-load-request' }
+  = { type: 'issues-load-request', projectId?: number }
   | { type: 'issues-load', success: boolean, issues: List<Issue> }
   | { type: 'issue-load-single-request', issueId: number }
   | { type: 'issue-load-single', success: boolean, issue?: Issue }
@@ -188,16 +188,16 @@ export type Action
   | RecordEditAction
   | RecordDetailsAction
 
-  export type AppState = {
-    lastAction: Action,
-    endpoint: Endpoint,
-    apiKey: ApiKey,
-    login: Login,
-    projects: List<Project>,
-    projectExpand: List<number>,
-    projectSelect: number,
-    issues: List<Issue>,
-    records: List<Record>,
-    recordEdit: RecordEdit,
-    recordDetails: RecordDetailsState
-  }
+export type AppState = {
+  lastAction: Action,
+  endpoint: Endpoint,
+  apiKey: ApiKey,
+  login: Login,
+  projects: List<Project>,
+  projectExpand: List<number>,
+  projectSelect: number,
+  issues: List<Issue>,
+  records: List<Record>,
+  recordEdit: RecordEdit,
+  recordDetails: RecordDetailsState
+}

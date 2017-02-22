@@ -1,23 +1,19 @@
 /* @flow */
 'use strict'
 
-import React, { Component } from 'react'
+import React from 'react'
 import {
-  ScrollView,
-  StyleSheet,
   Text,
-  TextInput,
   TouchableHighlight,
   View
 } from 'react-native'
-import { List, Range } from 'immutable'
+import { List } from 'immutable'
 // import ViewPager from 'react-native-viewpager'
 import ViewPager from './ViewPager'
-import Icon from 'react-native-vector-icons/FontAwesome'
+// import Icon from 'react-native-vector-icons/FontAwesome'
 import moment from 'moment'
 
 import type {
-  Issue,
   Record,
   RecordDetails
 } from '../../types'
@@ -128,17 +124,17 @@ const EntryView = ({
       underlayColor='gray'
       onPress={() => onPress(record.id)}
       style={{
-      position: 'absolute',
-      left: 0,
-      top: startAsHours / 24 * 100,
-      right: 0,
-      height: durationAsHours / 24 * 100,
-      backgroundColor: 'lightblue',
-      borderColor: selected ? 'gray' : 'lightblue',
-      borderWidth: selected ? 2 : 1,
-      borderRadius: 3,
-      margin: 3
-    }}>
+        position: 'absolute',
+        left: 0,
+        top: startAsHours / 24 * 100,
+        right: 0,
+        height: durationAsHours / 24 * 100,
+        backgroundColor: 'lightblue',
+        borderColor: selected ? 'gray' : 'lightblue',
+        borderWidth: selected ? 2 : 1,
+        borderRadius: 3,
+        margin: 3
+      }}>
       <View style={{ position: 'absolute', left: 0, top: 0, right: 0, bottom: 0 }} />
     </TouchableHighlight>
   )

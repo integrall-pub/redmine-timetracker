@@ -4,14 +4,11 @@
 import React, { Component } from 'react'
 import {
   Dimensions,
-  ScrollView,
   StyleSheet,
-  Text,
   TextInput,
   TouchableHighlight,
   View
 } from 'react-native'
-import Icon from 'react-native-vector-icons/FontAwesome'
 import { List } from 'immutable'
 import Fuse from 'fuse.js'
 
@@ -75,7 +72,7 @@ export default class Typeahead extends Component {
         <TextInput
           ref='text'
           value={value}
-          style={[ style, { height: 52}]}
+          style={[ style, { height: 52 } ]}
           onChangeText={onChange} />
 
         {/* workaround for missing z-index until react-native 0.31-ish */}
@@ -101,7 +98,7 @@ export default class Typeahead extends Component {
                   activeOpacity={0.8}
                   underlayColor='gray'
                   onPress={() => onSelect(s)}
-                  style={[styles.suggestion, { borderTopWidth: i === 0 ? 0 : 1}]}>
+                  style={[ styles.suggestion, { borderTopWidth: i === 0 ? 0 : 1 } ]}>
                   {container({ option: s })}
                 </TouchableHighlight>
               ))}
@@ -115,7 +112,7 @@ export default class Typeahead extends Component {
 }
 
 const filterOptions = (value: string, options: List<string>, keys: Array<string>) => (
-  List(new Fuse(options.toArray() , keys.length > 0 ? { keys: keys } : {}).search(value))
+  List(new Fuse(options.toArray(), keys.length > 0 ? { keys: keys } : {}).search(value))
 )
 
 const styles = StyleSheet.create({

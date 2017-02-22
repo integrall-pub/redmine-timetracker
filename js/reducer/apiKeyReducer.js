@@ -2,7 +2,7 @@
 
 import type { Action, ApiKey } from '../types'
 
-const initialState = () => ({ key: '', empty: true})
+const initialState = () => ({ key: '', empty: true })
 
 export default function apiKeyReducer (
   state: ApiKey = initialState(),

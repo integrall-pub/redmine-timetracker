@@ -36,10 +36,6 @@ type LoginComponentProps = {
 class LoginComponent extends Component {
   props: LoginComponentProps;
 
-  constructor (props: LoginComponentProps) {
-    super(props)
-  }
-
   render () {
     if (this.props.login.fail) {
       Alert.alert(

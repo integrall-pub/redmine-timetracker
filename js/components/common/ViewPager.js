@@ -1,4 +1,4 @@
-/* @flow */
+/* eslint-disable */
 'use strict'
 
 import React, { Component, PropTypes } from 'react'
@@ -333,3 +333,5 @@ var styles = StyleSheet.create({
 });
 
 export { ViewPager as default, DataSource }
+
+/* eslint-enable */

@@ -3,13 +3,9 @@
 
 import React, { Component } from 'react'
 import {
-  StyleSheet,
   ScrollView,
-  Keyboard,
-  Dimensions
+  Keyboard
 } from 'react-native'
-
-type StyleProp = number|string
 
 export type KeyboardAdaptiveScrollProps = {
   style: any,

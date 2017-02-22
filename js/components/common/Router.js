@@ -5,12 +5,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import {
   actions as routerActions,
-  NavBar,
-  Route,
-  Router,
-  Schema,
-  TabBar,
-  TabRoute
+  Router
 } from 'react-native-router-redux'
 
 type Props = {
@@ -34,5 +29,5 @@ export function RouterStatic ({
 
 export default connect(
   ({ router }) => ({ router }),
-  (dispatch) => ({ actions: { routerActions: bindActionCreators(routerActions, dispatch) } } )
+  (dispatch) => ({ actions: { routerActions: bindActionCreators(routerActions, dispatch) } })
 )(RouterStatic)

@@ -2,15 +2,8 @@
 'use strict'
 
 import React, { Component } from 'react'
+import { Provider } from 'react-redux'
 import {
-  Platform,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native'
-import { Provider, connect } from 'react-redux'
-import {
-  actions as routerActions,
   NavBar,
   Route,
   Schema,
@@ -34,8 +27,8 @@ import {
   EditComponent
 } from './components'
 
-import NavTitle from './components/common/NavTitle'
 import Router from './components/common/Router'
+// $FlowFixMe
 import attachNavigator from './util/attachNavigator'
 
 const routes = {
@@ -76,7 +69,7 @@ const routes = {
         switch (target) {
           case 'dashboard':
             navigator.pop()
-            break;
+            break
 
           case 'edit':
             navigator.push(routes['edit'])
@@ -99,10 +92,10 @@ const defaultSchema = {
   navTitleColor: '#FFFFFF',
   navTitleStyle: {
     fontFamily: 'Avenir Next',
-    fontSize: 18,
+    fontSize: 18
   },
   statusStyle: 'light-content',
-  tabBar: TabBar,
+  tabBar: TabBar
 }
 
 type RTTState = {
@@ -141,7 +134,7 @@ export default class RedmineTimeTracker extends Component {
     })
   }
 
-  render() {
+  render () {
     /* return (
       <Provider store={Store}>
         {this.state.init === 'waiting'

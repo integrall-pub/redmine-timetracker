@@ -67,16 +67,7 @@ const flattenChildren = (state: { depth: number, projects: List<Project> }, p: P
       ).projects
     }
     : {
-        ...state,
-        projects: state.projects.push({ ...p, depth: state.depth })
+      ...state,
+      projects: state.projects.push({ ...p, depth: state.depth })
     }
 )
-
-const log = (o: any) => {
-  if (List.isList(o)) {
-    console.log(o.toArray())
-  } else {
-    console.log(o)
-  }
-  return o
-}

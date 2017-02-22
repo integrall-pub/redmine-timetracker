@@ -3,16 +3,11 @@
 
 import React, { Component } from 'react'
 import {
-  Alert,
-  StyleSheet,
   Text,
-  TextInput,
-  TouchableHighlight,
   View
 } from 'react-native'
 
-
-import { initActions, recordActions } from '../actionCreators'
+import { initActions } from '../actionCreators'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
@@ -25,10 +20,6 @@ type SplashComponentProps = {
 }
 class SplashComponent extends Component {
   props: SplashComponentProps;
-
-  constructor (props: SplashComponentProps) {
-    super(props)
-  }
 
   componentDidMount () {
     this.props.actions.init.load()

@@ -1,12 +1,10 @@
 /* @flow */
 'use strict'
 
-import React, { Component } from 'react'
+import React from 'react'
 import {
-  ScrollView,
   StyleSheet,
   Text,
-  TextInput,
   TouchableHighlight,
   View
 } from 'react-native'

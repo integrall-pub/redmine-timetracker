@@ -4,10 +4,7 @@
 import React, { Component } from 'react'
 import {
   ScrollView,
-  StyleSheet,
   Text,
-  TextInput,
-  TouchableHighlight,
   View
 } from 'react-native'
 import { List } from 'immutable'
@@ -15,7 +12,6 @@ import { List } from 'immutable'
 import type {
   Project,
   Record,
-  RecordDetails,
   RecordDetailsState
 } from '../types'
 
@@ -54,10 +50,6 @@ type DashboardComponentProps = {
 class DashboardComponent extends Component {
   props: DashboardComponentProps;
 
-  constructor (props: DashboardComponentProps) {
-    super(props)
-  }
-
   componentDidMount () {
     this.props.actions.project.loadProjects()
   }
@@ -69,13 +61,12 @@ class DashboardComponent extends Component {
         <RecordView
           record={this.props.recordDetails.current}
           onEdit={() => {
-              let current = this.props.recordDetails.current
-              if (current) {
-                this.props.actions.recordEdit.load(current.base)
-                this.props.onNavigate('edit')
-              }
+            let current = this.props.recordDetails.current
+            if (current) {
+              this.props.actions.recordEdit.load(current.base)
+              this.props.onNavigate('edit')
             }
-          }
+          }}
           onStop={this.props.actions.record.stopRecording} />
         <View style={{ borderBottomWidth: 1, paddingLeft: 8 }}>
           <Text>Projects</Text>

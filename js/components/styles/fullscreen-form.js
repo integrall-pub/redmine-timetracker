@@ -35,7 +35,7 @@ export default StyleSheet.create({
   multilineInput: {
     width: 200,
     height: 80
-    //textAlign: 'center'
+    // textAlign: 'center'
   },
   buttonContainer: {
     marginTop: 20,

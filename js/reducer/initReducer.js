@@ -14,9 +14,9 @@ export default function loginReducer (
 ) {
   switch (action.type) {
     case 'prop-test':
-    return action.success
-      ? 'success'
-      : 'fail'
+      return action.success
+        ? 'success'
+        : 'fail'
 
     default:
       return state

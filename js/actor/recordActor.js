@@ -3,15 +3,9 @@ import type { Dispatch } from 'redux'
 import { List } from 'immutable'
 
 import type {
-  Action,
-  ApiKey,
-  AppState,
-  Record,
-  RecordDetails
+  AppState
 } from '../types'
-import type { Adapter } from '../dao/record'
 import { createAdapter } from '../dao/record'
-import * as client from '../dao/redmine/client'
 
 export default function () {
   const adapter = createAdapter()
@@ -34,7 +28,7 @@ export default function () {
           }
           return rs.push({
             ...createdRecord,
-            id: (rs.map((r) => r.id).max() || 0) + 1,
+            id: (rs.map((r) => r.id).max() || 0) + 1
           })
         })
         .then((rs) => dispatch({
@@ -42,14 +36,14 @@ export default function () {
           success: true,
           records: rs
         }))
-        .catch((error => {
+        .catch((error) => {
           console.log('create error', error)
           dispatch({
             type: 'record-create-done',
             success: false,
             records: List()
           })
-        }))
+        })
         break
 
       case 'record-edit':
@@ -66,14 +60,14 @@ export default function () {
           success: true,
           records: rs
         }))
-        .catch((error => {
+        .catch((error) => {
           console.log('edit error', error)
           dispatch({
             type: 'record-edit-done',
             success: false,
             records: List()
           })
-        }))
+        })
         break
     }
   }
@@ -86,11 +80,14 @@ const loadRecords = (state, dispatch, adapter) => (
       success: true,
       records: rs
     }))
-    .catch((error) => { console.log(error); dispatch({
-      type: 'record-load-done',
-      success: false,
-      records: List()
-    })})
+    .catch((error) => {
+      console.log(error)
+      dispatch({
+        type: 'record-load-done',
+        success: false,
+        records: List()
+      })
+    })
 )
 
 class RecordWriteError {

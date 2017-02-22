@@ -1,7 +1,7 @@
 /* @flow */
 'use strict'
 import { List } from 'immutable'
-import type { Action, InitState } from '../types'
+import type { Action } from '../types'
 
 const initialState = List()
 

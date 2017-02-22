@@ -1,6 +1,6 @@
 /* @flow */
 import type { Dispatch } from 'redux'
-import type { Action, ApiKey, AppState } from '../types'
+import type { AppState } from '../types'
 
 import * as client from '../dao/redmine/client'
 
@@ -25,7 +25,7 @@ export default function (state: AppState, dispatch: Dispatch) {
             key: k
           })
         })
-        .catch((error) => dispatch({
+        .catch(() => dispatch({
           type: 'api-login-request-fail'
         }))
       break
@@ -35,17 +35,18 @@ export default function (state: AppState, dispatch: Dispatch) {
         url,
         key)
         .then((ps) => dispatch({
-            type: 'projects-load-done',
-            success: true,
-            projects: ps
-          }))
+          type: 'projects-load-done',
+          success: true,
+          projects: ps
+        }))
         .catch((error) => {
           console.log(error)
           dispatch({
             type: 'projects-load-done',
             success: false,
             projects: []
-        })})
+          })
+        })
       break
 
     case 'issues-load':
@@ -58,7 +59,7 @@ export default function (state: AppState, dispatch: Dispatch) {
           success: true,
           issues: is
         }))
-        .catch((error) => dispatch({
+        .catch(() => dispatch({
           type: 'issues-load-done',
           success: false,
           issues: []

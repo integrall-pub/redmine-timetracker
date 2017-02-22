@@ -4,10 +4,7 @@
 import React, { Component } from 'react'
 import {
   ScrollView,
-  StyleSheet,
   Text,
-  TextInput,
-  TouchableHighlight,
   View
 } from 'react-native'
 import moment from 'moment'
@@ -24,8 +21,6 @@ import WeekView from './common/WeekView'
 import RecordSelector from './common/RecordSelector'
 
 import {
-  issueActions,
-  projectActions,
   recordActions
 } from '../actionCreators'
 import { bindActionCreators } from 'redux'
@@ -43,10 +38,6 @@ type HistoryComponentProps = {
 }
 class HistoryComponent extends Component {
   props: HistoryComponentProps;
-
-  constructor (props: HistoryComponentProps) {
-    super(props)
-  }
 
   componentDidMount () {
     if (this.props.records.size > 0) {

@@ -25,8 +25,8 @@ export const setPassword = (password: string): Action => ({
 
 export const tryLogin = (login: Login): Action => ({
   type: 'login-request',
-  username: login.username,
-  password: login.password
+  username: login.username || '',
+  password: login.password || ''
 })
 
 export const dismissFail = () => ({

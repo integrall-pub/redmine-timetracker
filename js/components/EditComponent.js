@@ -4,33 +4,24 @@
 import React, { Component } from 'react'
 import {
   Picker,
-  ScrollView,
-  StyleSheet,
   Text,
-  TextInput,
-  TouchableHighlight,
-  View
+  TextInput
 } from 'react-native'
-import moment from 'moment'
 import { List } from 'immutable'
 
 import type {
   Issue,
   Project,
-  Record,
-  RecordDetails,
   RecordEdit
 } from '../types'
 
 import KeyboardAdaptiveScroll from './common/KeyboardAdaptiveScroll'
+// $FlowFixMe
 import DatePicker from './common/DatePicker'
 
 import styles from './styles/fullscreen-form'
 
 import {
-  issueActions,
-  projectActions,
-  recordActions,
   recordEditActions
 } from '../actionCreators'
 import { bindActionCreators } from 'redux'
@@ -50,10 +41,6 @@ type EditComponentProps = {
 }
 class EditComponent extends Component {
   props: EditComponentProps;
-
-  constructor (props: EditComponentProps) {
-    super(props)
-  }
 
   render () {
     let {

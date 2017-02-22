@@ -1,11 +1,8 @@
 /* @flow */
 'use strict'
-import { List } from 'immutable'
 
 import type {
   Action,
-  Record,
-  RecordDetails,
   RecordDetailsState
 } from '../types'
 

@@ -21,7 +21,7 @@ export const createAdapter = (): Adapter => {
   return {
     migrate: () => (
       AsyncStorage.multiGet(['@RecordStore:migrations', '@RecordStore:records'])
-        .then(([[,_migrations], [,records]]) => {
+        .then(([[, _migrations], [, records]]) => {
           let oldMigrations = _migrations !== null
             ? List(JSON.parse(_migrations))
             : List()
@@ -60,7 +60,7 @@ export const createAdapter = (): Adapter => {
           write = false
           return rs
         })
-        .catch((error) => {
+        .catch(() => {
           write = false
           return List()
         })

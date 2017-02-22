@@ -1,12 +1,10 @@
 /* @flow */
 'use strict'
 
-import React, { Component } from 'react'
+import React from 'react'
 import {
-  ScrollView,
   StyleSheet,
   Text,
-  TextInput,
   TouchableHighlight,
   View
 } from 'react-native'
@@ -80,7 +78,7 @@ export default function ProjectView ({
 const ExpandCaret = ({ project, expanded }: { project: Project, expanded: boolean }) => (
   <View style={styles.expandCaret}>
     {project && project.children && project.children.size > 0
-      ? <Icon name={ expanded ? 'angle-up' : 'angle-down'} size={18} color='#333333' />
+      ? <Icon name={expanded ? 'angle-up' : 'angle-down'} size={18} color='#333333' />
       : null}
   </View>
 )
@@ -105,7 +103,7 @@ const RecButton = ({
         onPress={onPress}>
         <Icon name='play' size={18} color='#333333' style={{ opacity: disabled ? 0.4 : 1.0 }} />
       </TouchableHighlight>
-    ): null
+    ) : null
 )
 
 const depthStyles = (depth: number) => ({

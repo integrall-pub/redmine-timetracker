@@ -3,7 +3,9 @@
 
 import Realm from 'realm'
 
-class Property {}
+class Property {
+  static schema: any;
+}
 Property.schema = {
   name: 'Property',
   primaryKey: 'key',
@@ -13,7 +15,9 @@ Property.schema = {
   }
 }
 
-class Project {}
+class Project {
+  static schema: any;
+}
 Project.schema = {
   name: 'Project',
   primaryKey: 'id',
@@ -30,7 +34,9 @@ Project.schema = {
   }
 }
 
-class Issue {}
+class Issue {
+  static schema: any;
+}
 Issue.schema = {
   name: 'Issue',
   primaryKey: 'id',
@@ -43,11 +49,13 @@ Issue.schema = {
     projectId: 'int',
     projectName: 'string',
     trackerId: 'int',
-    trackerName: 'string',
+    trackerName: 'string'
   }
 }
 
-class Activity {}
+class Activity {
+  static schema: any;
+}
 Activity.schema = {
   name: 'Activity',
   primaryKey: 'id',
@@ -57,7 +65,9 @@ Activity.schema = {
   }
 }
 
-class Record {}
+class Record {
+  static schema: any;
+}
 Record.schema = {
   name: 'Record',
   primaryKey: 'id',

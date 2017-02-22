@@ -28,10 +28,6 @@ type EndpointComponentProps = {
 class EndpointComponent extends Component {
   props: EndpointComponentProps;
 
-  constructor (props: EndpointComponentProps) {
-    super(props)
-  }
-
   componentDidMount () {
   }
 

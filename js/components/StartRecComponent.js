@@ -3,11 +3,8 @@
 
 import React, { Component } from 'react'
 import {
-  ScrollView,
-  StyleSheet,
   Text,
   TextInput,
-  TouchableHighlight,
   View
 } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
@@ -21,7 +18,6 @@ import type {
 import KeyboardAdaptive from './common/KeyboardAdaptive'
 import styles from './styles/fullscreen-form'
 import Typeahead from './common/Typeahead'
-import ProjectView from './common/ProjectView'
 
 import {
   issueActions,
@@ -50,10 +46,6 @@ type StartRecComponentProps = {
 class StartRecComponent extends Component {
   props: StartRecComponentProps;
 
-  constructor (props: StartRecComponentProps) {
-    super(props)
-  }
-
   componentDidMount () {
     this.props.actions.issue.loadIssues()
   }
@@ -80,30 +72,30 @@ class StartRecComponent extends Component {
           keys={['id', 'tracker.name', 'subject']}
           container={({ option }: { option: Issue }) => (<Text>{'#' + option.id + ' ' + option.tracker.name + ': ' + option.subject}</Text>)}>
 
-            <Text style={styles.subtitle}>Description (optional)</Text>
-            <TextInput
-              ref='comment'
-              value={this.props.recordEdit.record.comment}
-              onChangeText={this.props.actions.recordEdit.editComment}
-              style={styles.multilineInput}
-              multiline />
+          <Text style={styles.subtitle}>Description (optional)</Text>
+          <TextInput
+            ref='comment'
+            value={this.props.recordEdit.record.comment}
+            onChangeText={this.props.actions.recordEdit.editComment}
+            style={styles.multilineInput}
+            multiline />
 
-            <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 10}}>
-              <View style={{ flex: 0.5, flexDirection: 'row' }}>
-                <Icon.Button
-                  name='play'
-                  size={18}
-                  onPress={() => this.props.actions.record.startRecording(
-                    this.props.recordEdit.record.projectId,
-                    this.props.recordEdit.record.issueId,
-                    this.props.recordEdit.record.comment
-                  )}>
-                  Start
-                </Icon.Button>
-              </View>
+          <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 10 }}>
+            <View style={{ flex: 0.5, flexDirection: 'row' }}>
+              <Icon.Button
+                name='play'
+                size={18}
+                onPress={() => this.props.actions.record.startRecording(
+                  this.props.recordEdit.record.projectId,
+                  this.props.recordEdit.record.issueId,
+                  this.props.recordEdit.record.comment
+                )}>
+                Start
+              </Icon.Button>
             </View>
+          </View>
 
-          </Typeahead>
+        </Typeahead>
       </KeyboardAdaptive>
     )
   }

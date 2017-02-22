@@ -5,7 +5,8 @@
   "scripts": {
     "start": "ANDROID_HOME=~/Android/Sdk node node_modules/react-native/local-cli/cli.js start",
     "run": "PATH=$PATH:~/Android/Sdk/platform-tools ANDROID_HOME=~/Android/Sdk node node_modules/react-native/local-cli/cli.js run-android",
-    "log": "ANDROID_HOME=~/Android/Sdk node node_modules/react-native/local-cli/cli.js log-android"
+    "log": "ANDROID_HOME=~/Android/Sdk node node_modules/react-native/local-cli/cli.js log-android",
+    "lint": "standard && flow check"
   },
   "dependencies": {
     "base-64": "^0.1.0",
@@ -23,7 +24,23 @@
     "redux": "^3.6.0"
   },
   "devDependencies": {
+    "babel-eslint": "^7.1.1",
+    "eslint-plugin-flowtype": "^2.30.0",
     "flow": "^0.2.3",
-    "flow-bin": "^0.29.0"
+    "flow-bin": "^0.29.0",
+    "standard": "^8.6.0"
+  },
+  "standard": {
+    "ignore": [
+      "index.android.js",
+      "index.ios.js"
+    ],
+    "global": [
+      "fetch"
+    ],
+    "plugins": [
+      "flowtype"
+    ],
+    "parser": "babel-eslint"
   }
 }

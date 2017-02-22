@@ -1,6 +1,6 @@
 /* @flow */
 import type { Dispatch } from 'redux'
-import type { Action, ApiKey, AppState } from '../types'
+import type { AppState } from '../types'
 
 import {
   AsyncStorage
@@ -12,7 +12,7 @@ export default function (state: AppState, dispatch: Dispatch) {
     case 'load-connection':
       AsyncStorage.multiGet(['@Connection:endpoint', '@Connection:apiKey'])
         .then((conn) => {
-          const  [[, endpoint], [, apiKey]] = conn
+          const [[, endpoint], [, apiKey]] = conn
           if (endpoint === null || endpoint.length === 0 || apiKey === null || apiKey.length === 0) {
             dispatch({
               type: 'load-connection-done',
@@ -27,7 +27,7 @@ export default function (state: AppState, dispatch: Dispatch) {
             })
           }
         })
-        .catch((error) => dispatch({
+        .catch(() => dispatch({
           type: 'load-connection-done',
           success: false
         }))

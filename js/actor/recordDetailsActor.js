@@ -1,10 +1,7 @@
 /* @flow */
 import type { Dispatch } from 'redux'
-import { List } from 'immutable'
 
 import type {
-  Action,
-  ApiKey,
   AppState,
   Record,
   RecordDetails
@@ -75,7 +72,7 @@ const loadRecordDetails = (
       state.endpoint.url,
       state.apiKey.key,
       record.issueId)
-      .catch((error) => Promise.resolve({
+      .catch(() => Promise.resolve({
         id: record.issueId,
         subject: '',
         description: '',

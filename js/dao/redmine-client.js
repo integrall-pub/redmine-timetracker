@@ -82,7 +82,7 @@ export function getActivities (
 function path (...parts: Array<string>) { return parts.join('/') }
 
 function authHeader (username: string, password: string) {
-  return  {
+  return {
     headers: {
       'Accept': 'application/json',
       'Authorization': 'Basic ' + encode(username + ':' + password)

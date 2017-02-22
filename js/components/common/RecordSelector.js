@@ -1,21 +1,17 @@
 /* @flow */
 'use strict'
 
-import React, { Component } from 'react'
+import React from 'react'
 import {
-  ScrollView,
   StyleSheet,
   Text,
-  TextInput,
   TouchableHighlight,
   View
 } from 'react-native'
 import { List } from 'immutable'
 import Icon from 'react-native-vector-icons/FontAwesome'
-import moment from 'moment'
 
 import type {
-  Issue,
   Record,
   RecordDetails
 } from '../../types'
@@ -54,9 +50,9 @@ export default function RecordSelector ({
       <View style={styles.textContainer}>
         <Text
           style={styles.text}>
-            {selected
-              ? ('#' + selected.issue.id + ' ' + selected.issue.tracker.name)
-              : ''}
+          {selected
+            ? ('#' + selected.issue.id + ' ' + selected.issue.tracker.name)
+            : ''}
         </Text>
       </View>
       <IconButton

@@ -7,7 +7,7 @@ import type {
   Issue
 } from '../types'
 
-const initialState =  List()
+const initialState = List()
 
 export default function issuesReducer (
   state?: List<Issue> = initialState,

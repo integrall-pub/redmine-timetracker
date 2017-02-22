@@ -1,12 +1,9 @@
 /* @flow */
 'use strict'
 
-import React, { Component } from 'react'
+import React from 'react'
 import {
-  ScrollView,
-  StyleSheet,
   Text,
-  TextInput,
   TouchableHighlight,
   View
 } from 'react-native'
@@ -14,7 +11,6 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 import moment from 'moment'
 
 import type {
-  Issue,
   Record,
   RecordDetails
 } from '../../types'
@@ -60,7 +56,7 @@ export default function RecordView ({
             </View>
             <View style={{ paddingTop: 3, flexDirection: 'row' }}>
               <Text>{issue ? ('#' + issue.id + ' ' + issue.tracker.name + ':') : ('#' + record.issue.id)}</Text>
-              <View  style={{ paddingRight: 2, flex: 1 }}>
+              <View style={{ paddingRight: 2, flex: 1 }}>
                 <Text>{issue ? (issue.subject) : ''}</Text>
                 <Text style={{ paddingTop: 2 }}>{record.comment}</Text>
               </View>
@@ -89,7 +85,7 @@ export default function RecordView ({
               style={{
                 padding: 7,
                 flex: 1,
-                opacity: isSynced? 0.5 : 1.0
+                opacity: isSynced ? 0.5 : 1.0
               }}
               onPress={() => {
                 if (record) {

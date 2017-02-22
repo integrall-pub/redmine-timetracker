@@ -3,13 +3,10 @@
 
 import React, { Component } from 'react'
 import {
-  StyleSheet,
   View,
   Keyboard,
   Dimensions
 } from 'react-native'
-
-type StyleProp = number|string
 
 export type KeyboardAdaptiveProps = {
   style: any,

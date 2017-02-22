@@ -5,17 +5,13 @@ import { List } from 'immutable'
 import * as Dao from '../dao'
 
 import type {
-  Action,
-  ApiKey,
   AppState,
   Issue,
-  Project,
-  Record,
-  RecordDetails
+  Project
 } from '../types'
 
 import {
-  actions as routerActions,
+  actions as routerActions
 } from 'react-native-router-redux'
 
 export default function (dao: typeof Dao) {
@@ -169,25 +165,6 @@ function dispatchIssues (
         type: 'issues-load',
         success: false,
         issues: List()
-      })
-    })
-}
-
-function dispatchIssue (
-  dispatch: Dispatch,
-  promised: Promise<Issue>
-) {
-  promised
-    .then((i) => dispatch({
-      type: 'issues-load-single',
-      success: true,
-      issue: i
-    }))
-    .catch((error) => {
-      console.error(error)
-      dispatch({
-        type: 'issues-load-single',
-        success: false
       })
     })
 }
