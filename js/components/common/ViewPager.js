@@ -1,3 +1,7 @@
+/**
+ * Inlined and modified ViewPager from https://github.com/race604/react-native-viewpager
+ * MIT Licensed
+ */
 /* eslint-disable */
 'use strict'
 
